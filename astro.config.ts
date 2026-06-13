@@ -1,4 +1,5 @@
 import sitemap from "@astrojs/sitemap"
+import { starlightKatex } from "starlight-katex"
 import starlight from "@astrojs/starlight"
 import tailwindcss from "@tailwindcss/vite"
 import astroPwa from "@vite-pwa/astro"
@@ -53,6 +54,7 @@ export default defineConfig({
       },
       customCss: ["./src/styles.css"],
       plugins: [
+        starlightKatex(),
         lucode({
           footerText: "",
         }),
