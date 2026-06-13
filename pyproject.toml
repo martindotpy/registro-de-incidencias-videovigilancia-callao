@@ -4,7 +4,12 @@ version = "0.1.0"
 description = "Registro de incidencias de videovigilancia en el Callao"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = ["curl-cffi==0.15.0", "matplotlib==3.11.0", "pandas==3.0.3"]
+dependencies = [
+    "curl-cffi==0.15.0",
+    "matplotlib==3.11.0",
+    "pandas==3.0.3",
+    "tabulate==0.10.0",
+]
 
 [build-system]
 requires = ["hatchling"]
