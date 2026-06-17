@@ -280,12 +280,9 @@ La arquitectura adopta un modelo ETL clásico compuesto por cuatro etapas:
     columns: (auto, auto, auto),
     align: (left, left, left),
     table.header([Herramienta], [Función], [Justificación]),
-    table.hline(),
     [Python 3.14], [ETL y análisis], [Librería `pandas` para manipulación y transformación de datos tabulares],
-    [`curl-cffi`], [Extracción de datos], [Descarga segura de archivos CSV con soporte para TLS fingerprinting],
-    [Power BI], [Visualización], [Herramienta de BI con filtros interactivos y publicación de dashboards],
+
     [VS Code + Jupyter], [Desarrollo], [Entorno de desarrollo con notebooks para ejecución reproducible],
-    [Typst], [Informe escrito], [Generación de documentos formales con soporte nativo para tablas y ecuaciones],
     table.hline(),
   ),
   caption: [Herramientas del proyecto y su justificación],
@@ -312,12 +309,16 @@ relacionada con dimensiones categóricas:
     columns: (auto, auto),
     align: (left, left),
     table.header([KPI], [Descripción]),
-    table.hline(),
     [Total de incidencias], [Cantidad acumulada de casos registrados en el período analizado],
+
     [Incidencias por zona], [Distribución geográfica de los casos para identificar zonas críticas],
+
     [Incidencias por turno], [Distribución temporal: mañana, tarde, noche y madrugada],
+
     [Tipo de caso más frecuente], [Categoría con mayor volumen de reportes (ej. tránsito, ambientales)],
+
     [Canal de reporte predominante], [Fuente de origen con mayor cantidad de incidencias],
+
     [Tiempo promedio de atención], [Intervalo entre la hora del caso y la hora de atención registrada],
     table.hline(),
   ),

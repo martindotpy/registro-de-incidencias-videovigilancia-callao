@@ -46,7 +46,10 @@ export default defineConfig({
       sidebar: [
         {
           label: "ETL",
-          items: [{ autogenerate: { directory: "etl" } }],
+          items: [
+            { autogenerate: { directory: "etl" } },
+            { label: "Proyecto final (PDF)", link: "/proy.pdf" },
+          ],
         },
       ],
       components: {
