@@ -35,7 +35,7 @@ NOTEBOOK_METADATA: NotebooksMetadata = {
     },
 }
 
-NOTEBOOKS_DIR = Path("src/content/docs")
+NOTEBOOKS_DIR = Path("src", "content", "docs")
 
 
 def _convert_single(path: Path) -> None:

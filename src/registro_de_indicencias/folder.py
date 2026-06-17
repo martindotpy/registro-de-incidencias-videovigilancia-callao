@@ -17,3 +17,4 @@ def _find_root_folder():
 WORKSPACE_FOLDER_PATH = _find_root_folder()
 DATA_FOLDER_PATH = WORKSPACE_FOLDER_PATH / "data"
 CSV_PATH = DATA_FOLDER_PATH / "registro_de_incidencias.csv"
+CLEAN_CSV_PATH = DATA_FOLDER_PATH / "registro_de_incidencias_clean.csv"

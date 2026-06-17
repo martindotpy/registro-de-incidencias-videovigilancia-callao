@@ -12,6 +12,7 @@ wheels/
 
 # PDF
 *.pdf
+!docs/rubrica.pdf
 
 # Dependencies
 node_modules/
