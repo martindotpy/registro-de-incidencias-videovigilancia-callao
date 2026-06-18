@@ -1,20 +1,17 @@
 ARG TZ=America/Lima
 ARG NODE_ENV=production
 
-FROM python:3.14-slim AS converter
+FROM pandoc/typst:latest-debian AS converter
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Install pandoc, typst and fonts (Arial from mscorefonts)
+# Install fonts (Arial from mscorefonts)
 RUN apt-get update -qq && \
-    apt-get install -y -qq --no-install-recommends pandoc curl xz-utils fontconfig && \
-    curl -sL https://github.com/typst/typst/releases/download/v0.15.0/typst-x86_64-unknown-linux-musl.tar.xz | tar xJ --strip-components=1 -C /usr/local/bin && \
     echo "deb http://deb.debian.org/debian bookworm contrib non-free non-free-firmware" >> /etc/apt/sources.list.d/contrib.list && \
     apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ttf-mscorefonts-installer && \
     fc-cache -f && \
-    apt-get purge -y --auto-remove curl xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
