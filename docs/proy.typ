@@ -43,7 +43,8 @@
 
 // Configuration
 #set page(numbering: none, paper: "a4")
-#set text(lang: "es", font: "Arial")
+#set text(lang: "es", font: "Arial", hyphenate: false)
+#set par(leading: 18pt, justify: true)
 #set figure(placement: none)
 #set table(align: left)
 #set image(fit: "contain")
@@ -138,15 +139,15 @@ aplicación móvil, teléfono, botón de pánico y atención presencial.
 
 == Misión y Visión
 
-Visión: Consolidar un sistema de seguridad ciudadana referente en el país,
-reconocido por su eficiencia operativa, uso responsable de la tecnología y
-capacidad de respuesta, contribuyendo al bienestar y desarrollo sostenible
-del Callao.
-
 Misión: Proteger a los ciudadanos del Callao mediante un sistema de
 monitoreo y videovigilancia eficiente, oportuno y transparente, garantizando
 la atención integral de incidencias y la coordinación interinstitucional para
 la prevención y reducción de la criminalidad.
+
+Visión: Consolidar un sistema de seguridad ciudadana referente en el país,
+reconocido por su eficiencia operativa, uso responsable de la tecnología y
+capacidad de respuesta, contribuyendo al bienestar y desarrollo sostenible
+del Callao.
 
 == Industria y tamaño
 
@@ -158,8 +159,10 @@ población estimada de más de 1 millón de habitantes.
 
 El sistema de monitoreo cuenta con una red de cámaras distribuidas en 3
 zonas principales, operadas por bases descentralizadas y una central de
-monitoreo. Según los datos analizados, se registraron más de 219,000
-incidencias, lo que evidencia la escala operativa y la importancia de
+monitoreo. El dataset analizado contiene 219,373 incidencias, de las cuales
+218,591 resultaron válidas tras el proceso de limpieza. Estas incidencias
+abarcan 8 canales de reporte, 10 categorías de caso y 39 bases
+descentralizadas, lo que evidencia la escala operativa y la importancia de
 herramientas de análisis para la gestión eficiente de recursos.
 
 == Modelo de negocio: Lienzo Canvas
@@ -262,27 +265,50 @@ a los tomadores de decisiones acceder a métricas relevantes en tiempo real.
 
 La arquitectura adopta un modelo ETL clásico compuesto por cuatro etapas:
 
-+ *Extracción:* Descarga del archivo CSV fuente desde la plataforma de datos
++ Extracción: Descarga del archivo CSV fuente desde la plataforma de datos
   abiertos del Estado Peruano mediante la librería `curl-cffi`.
-+ *Transformación:* Limpieza de valores nulos y duplicados, normalización de
++ Transformación: Limpieza de valores nulos y duplicados, normalización de
   formatos de fecha y hora, estandarización de texto y eliminación de columnas
   redundantes, utilizando la librería `pandas`.
-+ *Carga:* Exportación del dataset depurado a un nuevo archivo CSV
++ Carga: Exportación del dataset depurado a un nuevo archivo CSV
   (`registro_de_incidencias_clean.csv`) para su consumo por herramientas de
   visualización.
-+ *Visualización:* Dashboard interactivo en Power BI con filtros dinámicos,
++ Visualización: Dashboard interactivo en Power BI con filtros dinámicos,
   KPIs y gráficos orientados a la toma de decisiones.
 
 == Herramientas utilizadas
 
 #figure(
   table(
-    columns: (auto, auto, auto),
+    columns: (1fr, 1fr, 2fr),
     align: (left, left, left),
     table.header([Herramienta], [Función], [Justificación]),
-    [Python 3.14], [ETL y análisis], [Librería `pandas` para manipulación y transformación de datos tabulares],
+    [Python 3.14], [ETL y análisis], [Lenguaje principal para el pipeline de datos],
 
-    [VS Code + Jupyter], [Desarrollo], [Entorno de desarrollo con notebooks para ejecución reproducible],
+    [`pandas`], [Manipulación de datos], [Lectura, limpieza, transformación y exportación de datasets tabulares],
+
+    [`curl-cffi`],
+    [Descarga de datos],
+    [Extracción del CSV fuente desde datos abiertos y del GeoJSON para validación geográfica],
+
+    [`orjson`], [Parsing JSON], [Lectura eficiente del archivo GeoJSON con los límites distritales],
+
+    [`shapely`], [Georrefenciación], [Cálculo de polígonos y buffers para filtrar coordenadas dentro del Callao],
+
+    [`Tortoise ORM`],
+    [Acceso a base de datos y migraciones],
+    [Mapeo objeto-relacional para carga en PostgreSQL con esquema estrella; incluye la API de migraciones integrada],
+
+    [`PostgreSQL`],
+    [Almacenamiento],
+    [Base de datos relacional para el almacén de datos con soporte de tipos geográficos],
+
+    [VS Code + Jupyter], [Desarrollo], [Entorno de desarrollo con notebooks para ejecución reproducible y documentada],
+
+    [Power BI],
+    [Visualización],
+    [Dashboard interactivo con filtros dinámicos, KPIs y gráficos orientados a la toma de decisiones],
+
     table.hline(),
   ),
   caption: [Herramientas del proyecto y su justificación],
@@ -290,72 +316,157 @@ La arquitectura adopta un modelo ETL clásico compuesto por cuatro etapas:
 
 == Diseño del modelado de datos
 
-El dataset transformado se organiza en una estructura de tabla de hechos
-relacionada con dimensiones categóricas:
+El dataset transformado se organiza en un esquema estrella compuesto por una
+tabla de hechos central y cuatro tablas de dimensión. Esta arquitectura
+permite consultas analíticas eficientes al desnormalizar las dimensiones
+categóricas y mantener la granularidad en la tabla de hechos.
 
-- *Tabla de hechos — Incidencias:* `N° CASO` (identificador), `FECHA DEL
-  CASO`, `HORA DEL CASO`, `LATITUD`, `LONGITUD`, `ATENCION AL CASO`,
-  `HORA ATENCION AL CASO`.
-- *Dimensión geográfica:* `ZONA` (sector y cuadrante), `BASE DESCENTRALIZADA`.
-- *Dimensión temporal:* `TURNO` (mañana, tarde, noche, madrugada).
-- *Dimensión categorial:* `TIPO DE CASO`, `ORIGEN` (canal de reporte).
+=== Tablas de dimensión
+
+- DimTime (95,526 registros): Una fila por cada combinación única de
+  fecha y hora. Contiene campos derivados: año, mes, día, día de la semana
+  y turno (Madrugada, Mañana, Tarde, Noche).
+- DimLocation (168 registros): Una fila por cada combinación de zona,
+  sector y base descentralizada. Integra la estructura geográfica operativa
+  del sistema de videovigilancia.
+- DimCaseType (10 registros): Una fila por cada categoría de incidencia.
+  Las categorías incluyen Tránsito y Seguridad Vial, Ambientales,
+  Fiscalización y Defensa Civil, entre otras.
+- DimOrigin (8 registros): Una fila por cada canal de reporte. Los
+  canales principales son Cámara (97.6% de los registros), WhatsApp (1.5%),
+  App Callao Seguro, Teléfono, Botón de Pánico, Atención Presencial, Radio
+  y QR.
+
+=== Tabla de hechos
+
+- FactIncident (218,591 registros): Cada fila representa una incidencia
+  única, vinculada a las cuatro dimensiones mediante claves foráneas.
+  Incluye coordenadas geográficas (latitud y longitud), número de caso y
+  tiempo de respuesta calculado como la diferencia entre la hora del caso
+  y la hora de atención.
+
+=== Relaciones
+
+Cada registro de FactIncident se vincula con una fila en cada tabla de
+dimensión: DimTime (cuándo ocurrió), DimLocation (dónde ocurrió),
+DimCaseType (qué tipo de incidencia) y DimOrigin (cómo se reportó).
 
 \<pendiente-modelado>
 
 == Indicadores clave de rendimiento (KPI)
 
+Los siguientes indicadores se derivan directamente de las dimensiones y la
+tabla de hechos del esquema estrella. Cada KPI responde a una pregunta
+operativa concreta de la Municipalidad y orienta decisiones sobre
+distribución de recursos y priorización de zonas.
+
 #figure(
   table(
-    columns: (auto, auto),
-    align: (left, left),
-    table.header([KPI], [Descripción]),
-    [Total de incidencias], [Cantidad acumulada de casos registrados en el período analizado],
+    columns: (2fr, 3fr, 2fr),
+    align: (left, left, left),
+    table.header([KPI], [Descripción], [Fuente de datos]),
+    [Total de incidencias], [Cantidad acumulada de casos registrados en el período analizado], [FactIncident],
 
-    [Incidencias por zona], [Distribución geográfica de los casos para identificar zonas críticas],
+    [Incidencias por zona],
+    [Distribución geográfica de los casos para identificar zonas críticas],
+    [FactIncident $times$ DimLocation],
 
-    [Incidencias por turno], [Distribución temporal: mañana, tarde, noche y madrugada],
+    [Incidencias por turno], [Distribución temporal: Madrugada, Mañana, Tarde y Noche], [FactIncident $times$ DimTime],
 
-    [Tipo de caso más frecuente], [Categoría con mayor volumen de reportes (ej. tránsito, ambientales)],
+    [Incidencias por categoría],
+    [Frecuencia de cada tipo de caso (Tránsito, Ambientales, Fiscalización, etc.)],
+    [FactIncident $times$ DimCaseType],
 
-    [Canal de reporte predominante], [Fuente de origen con mayor cantidad de incidencias],
+    [Canal de reporte predominante],
+    [Fuente de origen con mayor volumen de incidencias],
+    [FactIncident $times$ DimOrigin],
 
-    [Tiempo promedio de atención], [Intervalo entre la hora del caso y la hora de atención registrada],
+    [Tiempo promedio de atención],
+    [Intervalo promedio en minutos entre la hora del caso y la hora de atención],
+    [FactIncident\
+      .response_time_min],
+
+    [Incidencias por base descentralizada],
+    [Distribución del workload entre las 39 bases operativas],
+    [FactIncident $times$ DimLocation],
+
+    [Tendencia mensual], [Evolución del número de incidencias a lo largo del tiempo], [FactIncident $times$ DimTime],
+
     table.hline(),
   ),
   caption: [Indicadores clave de rendimiento del sistema de videovigilancia],
 )
 
 
-= ETL
-
-#render(nb: json("/src/content/docs/etl/extraccion.ipynb"))
-
-#render(nb: json("/src/content/docs/etl/transformacion.ipynb"))
-
-#render(nb: json("/src/content/docs/etl/carga.ipynb"))
-
-
-= Construcción del dashboard en Power BI
+= Construcción y calidad del dashboard en Power BI
 
 == Construcción de solución ETL
 
+El pipeline ETL se ejecuta en tres etapas secuenciales, cada una implementada
+en un cuaderno Jupyter independiente. Esta separación permite documentar
+cada fase con su respectiva justificación y resultados intermedios. El
+procedimiento completo de ejecución de los cuadernos está disponible en:
+https://registro-incidencias-videovigilancia-callao.martindotpy.dev.
 
-== Construcción del dashboard en Power BI
+=== Extracción
 
+El cuaderno de extracción descarga el archivo CSV fuente desde la plataforma
+de datos abiertos del Estado Peruano. El dataset contiene 219,373 registros
+con 18 columnas, incluyendo información sobre origen del reporte, ubicación
+geográfica, categoría del caso, fechas y horas. El archivo pesa 39.39 MB y
+se almacena localmente con un patrón de escritura atómica (archivo temporal
+`.tmp` + renombrado) para evitar corrupción en caso de interrupción.
 
-= Storytelling con datos
+// Renderize example
+// #render(nb: json("/src/content/docs/etl/extraccion.ipynb"))
 
+=== Transformación
 
-= Conclusiones, Recomendaciones y Lecciones Aprendidas
+El cuaderno de transformación aplica las siguientes operaciones de limpieza
+y normalización sobre los 219,373 registros:
 
-== Conclusiones
++ Eliminación de nulos: Se descartan 145 filas (0.07%) con valores nulos
+  en la columna ZONA.
++ Eliminación de valores atípicos: Se eliminan 4 filas con cadenas
+  corruptas que concatenaban múltiples zonas.
++ Filtrado geográfico: Se valida que las coordenadas caigan dentro del
+  distrito del Callao usando un GeoJSON con un buffer de 100 metros. Se
+  eliminan 629 registros (0.29%) fuera del límite distrital.
++ Eliminación de duplicados: Se detectan 4 casos duplicados (mismo N°
+  CASO reportado por múltiples cámaras) y se eliminan.
++ Normalización de texto: Se aplica title case con mapeo de palabras
+  especiales (Cámara, WhatsApp, Teléfono, Fiscalización) a las columnas
+  ORIGEN, TURNO, TIPO DE CASO y BASE DESCENTRALIZADA.
++ Eliminación de columnas redundantes: DEPARTAMENTO, PROVINCIA, DISTRITO,
+  UBIGEO, FECHA CORTE y ESTADO (todos con valor constante CERRADO).
++ Parsing de ZONA: Se separa la columna ZONA en número de zona (entero)
+  y nombre del sector (texto).
++ Conversión de fechas y horas: Se transforman las columnas de fecha
+  (formato ddmmyyyy) y hora (formato HHMM) a tipos datetime y time
+  de pandas.
++ Renombrado a snake_case: Todas las columnas se renombran al formato
+  inglés para consistencia técnica.
 
+El resultado final son 218,591 registros limpios exportados a
+`registro_de_incidencias_clean.csv`.
 
-== Recomendaciones
+=== Carga
 
+El cuaderno de carga inserta los datos limpios en una base de datos
+PostgreSQL utilizando un esquema estrella con Tortoise ORM. El proceso
+incluye:
 
-== Lecciones aprendidas
-
++ Migración del esquema: Se ejecuta `migrate_db()` para crear o actualizar
+  las tablas según las definiciones del modelo.
++ Carga de dimensiones: Se insertan los valores únicos en DimTime
+  (95,526 registros), DimLocation (168 registros), DimCaseType (10
+  registros) y DimOrigin (8 registros). Se construyen diccionarios de
+  mapeo valor a id para las relaciones.
++ Carga de la tabla de hechos: Se insertan los 218,591 registros de
+  FactIncident en lotes de 10,000 usando `bulk_create()`. Cada registro
+  incluye las claves foráneas de las dimensiones, coordenadas geográficas
+  en formato `Decimal` y el tiempo de respuesta calculado como la
+  diferencia entre `case_time` y `case_attention_time`.
 
 
 #bibliography(
