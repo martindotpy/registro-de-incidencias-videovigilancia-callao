@@ -192,6 +192,14 @@
     @apply font-mono!;
   }
 
+  .sl-markdown-content {
+    @apply flex flex-col;
+  }
+
+  .sl-markdown-content table {
+    @apply w-fit max-w-full self-center;
+  }
+
   .sl-markdown-content ul {
     @apply list-disc space-y-1 pl-6;
   }

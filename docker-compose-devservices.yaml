@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      TZ: America/Lima
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: "registro-indicencias"
+    ports:
+      - "5432:5432"
+
+  database-sql-studio:
+    image: ghcr.io/drizzle-team/gateway:latest
+    environment:
+      TZ: America/Lima
+      DATABASE_URL_APP: postgres://user:password@database:5432/registro-indicencias
+      STORE_PATH: /data
+    volumes:
+      - /data
+    ports:
+      - "4983:4983"
+
+volumes:
+  sql-studio-data:

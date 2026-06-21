@@ -57,7 +57,7 @@
     "typescript-eslint": "8.61.0"
   },
   "peerDependencies": {
-    "typescript": "6"
+    "typescript": "^6"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx,cjs,mjs}": [

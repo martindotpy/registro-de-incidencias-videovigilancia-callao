@@ -41,10 +41,12 @@ yarn-error.log*
 # Env files
 .env*
 !.env*.example
+!.env
 
 # Misc
 .DS_Store
 *.pem
+*.geojson
 
 # Executables
 *.exe

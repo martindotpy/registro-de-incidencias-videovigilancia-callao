@@ -17,11 +17,15 @@ RUN apt-get update -qq && \
 WORKDIR /app
 
 # Notebooks and conversion script
+COPY pyproject.toml uv.lock ./
+
+RUN uv sync --only-group dev --no-cache
+
 COPY src/ src/
 COPY scripts/ scripts/
 COPY docs/ docs/
 
-RUN uv run --with nbconvert scripts/convert_notebooks.py && \
+RUN uv run --only-group dev scripts/convert_notebooks.py && \
     mkdir -p public && \
     typst compile --root . docs/proy.typ public/proy.pdf
 

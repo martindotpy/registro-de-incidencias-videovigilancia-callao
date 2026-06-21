@@ -1,5 +1,3 @@
-"""Convert Jupyter notebooks to Markdown with nbconvert + frontmatter for Starlight."""
-
 import json
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -8,6 +6,7 @@ from typing import TYPE_CHECKING
 from nbconvert import MarkdownExporter
 from nbformat import read
 
+# Type
 if TYPE_CHECKING:
     from typing import TypedDict
 
@@ -20,6 +19,7 @@ if TYPE_CHECKING:
     type NotebooksMetadata = dict[str, NotebookMetadata]
 
 
+# Const
 NOTEBOOK_METADATA: NotebooksMetadata = {
     "extraccion": {
         "title": "Extracción",
@@ -38,6 +38,7 @@ NOTEBOOK_METADATA: NotebooksMetadata = {
 NOTEBOOKS_DIR = Path("src", "content", "docs")
 
 
+# Notebook
 def _convert_single(path: Path) -> None:
     stem = path.stem
     meta = NOTEBOOK_METADATA.get(
