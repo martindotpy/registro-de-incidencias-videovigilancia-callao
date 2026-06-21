@@ -87,7 +87,9 @@ export default defineConfig({
       filter(page) {
         const pageUrl = new URL(page, site)
 
-        if (pageUrl.pathname.endsWith("/_shell")) return false
+        if (pageUrl.pathname.endsWith("/_shell")) {
+          return false
+        }
 
         return true
       },
