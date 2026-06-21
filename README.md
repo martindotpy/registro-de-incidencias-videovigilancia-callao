@@ -23,7 +23,7 @@ a markdown.
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/martindotpy/registro-de-indicencias-videovigilancia-callao.git
+git clone https://github.com/martindotpy/registro-de-incidencias-videovigilancia-callao.git
 cd registro-incidencias-videovigilancia-callao
 ```
 
@@ -47,7 +47,7 @@ bun install
 Copia el archivo `.env.example` (si existe) o crea un archivo `.env`:
 
 ```bash
-DATABASE_URL=postgres://user:password@localhost:5432/registro-indicencias
+DATABASE_URL=postgres://user:password@localhost:5432/registro-incidencias
 ```
 
 ## Ejecución
@@ -129,14 +129,14 @@ docker run -p 80:80 registro-incidencias
 
 ## Estructura del proyecto
 
-```
+```plaintext
 registro-incidencias-videovigilancia-callao/
 ├── src/
 │   ├── content/docs/etl/          # Notebooks Jupyter (ETL)
 │   │   ├── extraccion.ipynb       # Extracción de datos
 │   │   ├── transformacion.ipynb   # Transformación y limpieza
 │   │   └── carga.ipynb            # Carga a PostgreSQL
-│   ├── registro_de_indicencias/   # Módulos Python
+│   ├── registro_de_incidencias/   # Módulos Python
 │   │   ├── model.py               # Modelos ORM (Tortoise)
 │   │   ├── database.py            # Configuración de BD
 │   │   ├── configuration.py       # Variables de entorno

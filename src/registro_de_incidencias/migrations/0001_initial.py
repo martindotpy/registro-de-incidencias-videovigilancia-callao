@@ -1,6 +1,6 @@
 from tortoise import migrations
 from tortoise.migrations import operations as ops
-from registro_de_indicencias.model import CaseCategoryEnum, DayOfWeekEnum, OriginCategoryEnum, TurnEnum
+from registro_de_incidencias.model import CaseCategoryEnum, DayOfWeekEnum, OriginCategoryEnum, TurnEnum
 from tortoise.fields.base import OnDelete
 from tortoise import fields
 

@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@martindotpy/registro-de-indicencias-videovigilancia-callao",
+      "name": "@martindotpy/registro-de-incidencias-videovigilancia-callao",
       "dependencies": {
         "@astrojs/sitemap": "3.7.3",
         "@astrojs/starlight": "0.40.0",

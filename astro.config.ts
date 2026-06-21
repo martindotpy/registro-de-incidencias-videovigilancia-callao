@@ -42,7 +42,7 @@ export default defineConfig({
         {
           icon: "github",
           label: "GitHub",
-          href: "https://github.com/martindotpy/registro-de-indicencias-videovigilancia-callao",
+          href: "https://github.com/martindotpy/registro-de-incidencias-videovigilancia-callao",
         },
       ],
       sidebar: [

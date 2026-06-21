@@ -6,7 +6,7 @@ services:
       TZ: America/Lima
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: "registro-indicencias"
+      POSTGRES_DB: "registro-incidencias"
     ports:
       - "5432:5432"
 
@@ -14,7 +14,7 @@ services:
     image: ghcr.io/drizzle-team/gateway:latest
     environment:
       TZ: America/Lima
-      DATABASE_URL_APP: postgres://user:password@database:5432/registro-indicencias
+      DATABASE_URL_APP: postgres://user:password@database:5432/registro-incidencias
       STORE_PATH: /data
     volumes:
       - /data

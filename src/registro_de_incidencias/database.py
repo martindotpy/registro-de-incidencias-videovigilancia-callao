@@ -2,7 +2,7 @@ from tortoise import Tortoise
 from tortoise.config import AppConfig, DBUrlConfig, TortoiseConfig
 from tortoise.migrations.api import migrate
 
-from registro_de_indicencias.configuration import app_configuration
+from registro_de_incidencias.configuration import app_configuration
 
 # Config
 TORTOISE_ORM = TortoiseConfig(
@@ -11,9 +11,9 @@ TORTOISE_ORM = TortoiseConfig(
     },
     apps={
         "models": AppConfig(
-            models=["registro_de_indicencias.model"],
+            models=["registro_de_incidencias.model"],
             default_connection="default",
-            migrations="registro_de_indicencias.migrations",
+            migrations="registro_de_incidencias.migrations",
         ),
     },
 )
