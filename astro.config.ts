@@ -2,9 +2,9 @@ import sitemap from "@astrojs/sitemap"
 import starlight from "@astrojs/starlight"
 import tailwindcss from "@tailwindcss/vite"
 import astroPwa from "@vite-pwa/astro"
-import mermaid from "astro-mermaid"
 import compress from "astro-compress"
 import compressor from "astro-compressor"
+import mermaid from "astro-mermaid"
 import { defineConfig, fontProviders } from "astro/config"
 import lucode from "lucode-starlight"
 import { starlightKatex } from "starlight-katex"
@@ -109,8 +109,6 @@ export default defineConfig({
         display: "standalone",
       },
       workbox: {
-        navigateFallback: "_shell",
-        navigateFallbackDenylist: [/^\/api\//],
         globPatterns: [
           "**/*.{html,png,jpg,jpeg,svg,webp,avif,gif,ico,js,css,woff2,woff,ttf,otf}",
         ],
@@ -196,4 +194,5 @@ export default defineConfig({
     },
   ],
   image: { layout: "constrained" },
+  devToolbar: { enabled: false },
 })

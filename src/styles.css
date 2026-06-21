@@ -184,10 +184,6 @@
     @apply scroll-mt-header-h;
   }
 
-  .sl-link-button {
-    @apply rounded!;
-  }
-
   pre * {
     @apply font-mono!;
   }
@@ -216,7 +212,23 @@
     @apply text-muted-foreground;
   }
 
-  .logo {
-    @apply fill-current dark:fill-white;
+  .sl-link-button {
+    @apply rounded!;
+  }
+
+  .entry-link-inner {
+    @apply hover:text-muted-foreground! underline-offset-4 hover:bg-transparent! hover:underline;
+  }
+
+  .entry-link[aria-current="page"] > .entry-link-inner {
+    @apply hover:text-foreground! bg-transparent! underline;
+  }
+
+  [data-slot="doc-title-actions"] > a[data-slot="button"] {
+    @apply bg-transparent!;
+  }
+
+  .pagination-links > a {
+    @apply bg-transparent! underline! underline-offset-4;
   }
 }
