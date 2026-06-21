@@ -1,12 +1,13 @@
 import sitemap from "@astrojs/sitemap"
-import { starlightKatex } from "starlight-katex"
 import starlight from "@astrojs/starlight"
 import tailwindcss from "@tailwindcss/vite"
 import astroPwa from "@vite-pwa/astro"
+import mermaid from "astro-mermaid"
 import compress from "astro-compress"
 import compressor from "astro-compressor"
 import { defineConfig, fontProviders } from "astro/config"
 import lucode from "lucode-starlight"
+import { starlightKatex } from "starlight-katex"
 import checker from "vite-plugin-checker"
 import svgr from "vite-plugin-svgr"
 
@@ -22,6 +23,7 @@ export default defineConfig({
   trailingSlash: "never",
 
   integrations: [
+    mermaid(),
     starlight({
       title: "Registro de Incidencias de Videovigilancia en el Callao",
       logo: {
@@ -47,8 +49,19 @@ export default defineConfig({
         {
           label: "ETL",
           items: [
-            { autogenerate: { directory: "etl" } },
-            { label: "Proyecto final (PDF)", link: "/proy.pdf" },
+            { slug: "etl/extraccion" },
+            { slug: "etl/transformacion" },
+            { slug: "etl/carga" },
+          ],
+        },
+        {
+          label: "Documentación",
+          items: [
+            {
+              label: "Proyecto final (PDF)",
+              link: "/proy.pdf",
+              attrs: { target: "_blank" },
+            },
           ],
         },
       ],
