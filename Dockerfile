@@ -1,3 +1,4 @@
+# check=skip=FromPlatformFlagConstDisallowed
 ARG TZ=America/Lima
 ARG NODE_ENV=production
 
