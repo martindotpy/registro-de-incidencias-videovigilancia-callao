@@ -16,18 +16,22 @@ RUN apt-get update -qq && \
 
 WORKDIR /app
 
+RUN mkdir -p public
+
 # Notebooks and conversion script
 COPY pyproject.toml uv.lock ./
 
 RUN uv sync --only-group dev --no-cache
 
-COPY src/ src/
+COPY src/assets/ src/assets/
+COPY src/content/docs/ src/content/docs/
 COPY scripts/ scripts/
+
+RUN uv run --only-group dev scripts/convert_notebooks.py
+
 COPY docs/ docs/
 
-RUN uv run --only-group dev scripts/convert_notebooks.py && \
-    mkdir -p public && \
-    typst compile --root . docs/proy.typ public/proy.pdf
+RUN typst compile --root . docs/proy.typ public/proy.pdf
 
 
 FROM oven/bun:1-slim AS builder
@@ -49,7 +53,8 @@ RUN bun install --ci
 RUN bun astro telemetry disable
 
 # Copy converted markdown from converter stage (keeps .ipynb too)
-COPY --from=converter /app/src/ src/
+COPY src/ src/
+COPY --from=converter /app/src/content/docs/ src/content/docs/
 
 # Copy compiled Typst PDF
 COPY --from=converter /app/public/proy.pdf public/proy.pdf
