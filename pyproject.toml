@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "Registro de incidencias de videovigilancia en el Callao"
 requires-python = ">=3.14"
 dependencies = [
-    "aerich==0.8.1",
     "curl-cffi==0.15.0",
     "matplotlib==3.11.0",
     "pandas==3.0.3",
@@ -26,7 +25,11 @@ packages = ["src/registro_de_indicencias"]
 where = ["src"]
 
 [dependency-groups]
-dev = ["ipykernel==7.3.0", "nbconvert==7.17.1"]
+dev = [
+    "ipykernel==7.3.0",
+    "jupyter==1.1.1",
+    "nbconvert==7.17.1",
+]
 
 [tool.ruff]
 indent-width = 4
