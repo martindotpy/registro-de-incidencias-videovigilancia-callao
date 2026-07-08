@@ -111,12 +111,14 @@ export default defineConfig({
         display: "standalone",
       },
       workbox: {
+        navigateFallback: "/404",
+        navigateFallbackDenylist: [/^\/api\//, /\.pdf$/],
         globPatterns: [
           "**/*.{html,png,jpg,jpeg,svg,webp,avif,gif,ico,js,css,woff2,woff,ttf,otf}",
         ],
         globIgnores: [
-          "**\\/node_modules\\/**\\/*",
-          "\\/src\\/**\\/*",
+          String.raw`**\/node_modules\/**\/*`,
+          String.raw`\/src\/**\/*`,
           "**/index.png",
           "index.png",
           "sw.js",

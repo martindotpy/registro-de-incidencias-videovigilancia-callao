@@ -1,0 +1,46 @@
+erDiagram
+    DIM_TIME {
+        int id PK
+        date date
+        time time
+        int year
+        int month
+        int day
+        string day_of_week
+        string turn
+    }
+
+    DIM_LOCATION {
+        int id PK
+        int zone_number
+        string sector_name
+        string decentralized_base
+    }
+
+    DIM_CASE_TYPE {
+        int id PK
+        string category
+    }
+
+    DIM_ORIGIN {
+        int id PK
+        string category
+    }
+
+    FACT_INCIDENT {
+        int id PK
+        int id_time FK
+        int id_location FK
+        int id_case_type FK
+        int id_origin FK
+        string case_number
+        float latitude
+        float longitude
+        float response_time_min
+        date attention_date
+    }
+
+    DIM_TIME ||--o{ FACT_INCIDENT : "has"
+    DIM_LOCATION ||--o{ FACT_INCIDENT : "has"
+    DIM_CASE_TYPE ||--o{ FACT_INCIDENT : "has"
+    DIM_ORIGIN ||--o{ FACT_INCIDENT : "has"

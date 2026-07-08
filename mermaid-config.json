@@ -1,0 +1,60 @@
+{
+  "$schema": "https://mermaid.js.org/schemas/config.schema.json",
+  "theme": "neutral",
+  "fontFamily": "Arial",
+  "htmlLabels": true,
+  "themeVariables": {
+    "fontFamily": "Arial, serif",
+    "primaryColor": "#F0F4F8",
+    "primaryTextColor": "#000000",
+    "primaryBorderColor": "#2C3E50",
+    "lineColor": "#5D6D7E",
+    "secondaryColor": "#FFFFFF",
+    "secondaryTextColor": "#000000",
+    "secondaryBorderColor": "#2C3E50",
+    "tertiaryColor": "#FFFFFF",
+    "tertiaryTextColor": "#000000",
+    "tertiaryBorderColor": "#BDC3C7",
+    "clusterBkg": "#F8F9FA",
+    "clusterBorder": "#DEE2E6",
+    "titleColor": "#000000",
+    "nodeBorder": "#2C3E50",
+    "nodeTextColor": "#000000",
+    "edgeLabelColor": "#000000"
+  },
+  "flowchart": {
+    "titleTopMargin": 32,
+    "diagramPadding": 14,
+    "nodeSpacing": 50,
+    "rankSpacing": 60,
+    "htmlLabels": true,
+    "curve": "basis",
+    "useMaxWidth": true,
+    "padding": 4
+  },
+  "sequence": {
+    "mirrorActors": false,
+    "bottomMarginAdj": 10,
+    "actorFontSize": 12,
+    "actorFontFamily": "Arial, serif",
+    "noteFontSize": 11,
+    "noteFontFamily": "Arial, serif",
+    "messageFontSize": 11,
+    "messageFontFamily": "Arial, serif"
+  },
+  "class": {
+    "hideEmptyMembersBox": false,
+    "useWidth": 1200,
+    "titleTopMargin": 25,
+    "useMaxWidth": true,
+    "textHeight": 32,
+    "rankSpacing": 20,
+    "defaultRenderer": "elk"
+  },
+  "er": {
+    "entityPaddingSize": 15,
+    "stroke": "#2C3E50",
+    "fill": "#F0F4F8",
+    "fontSize": 11
+  }
+}

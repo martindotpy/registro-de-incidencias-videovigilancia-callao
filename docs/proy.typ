@@ -209,11 +209,26 @@ herramientas de análisis para la gestión eficiente de recursos.
 
 == Matriz FODA
 
-\<pendiente-foda>
+#block(
+  align(center, figure(
+    image("/src/assets/img/foda.jpeg", width: 100%, height: 1fr),
+    caption: [Matriz FODA],
+  )),
+  height: 1fr,
+)
 
 == Diagrama de la problemática (Ishikawa)
 
-\<pendiente-ishikawa>
+#block(
+  align(center, figure(
+    image("/src/assets/img/ishikawa.jpeg", width: 100%, height: 1fr),
+    caption: [Diagrama de Ishikawa],
+  )),
+  height: 1fr,
+)
+
+#colbreak()
+
 
 == Problemática central del negocio
 
@@ -351,7 +366,12 @@ Cada registro de FactIncident se vincula con una fila en cada tabla de
 dimensión: DimTime (cuándo ocurrió), DimLocation (dónde ocurrió),
 DimCaseType (qué tipo de incidencia) y DimOrigin (cómo se reportó).
 
-\<pendiente-modelado>
+#block(
+  align(center, figure(
+    image("/src/assets/img/start-schema.png", width: 100%, height: 1fr),
+    caption: [Esquema estrella],
+  )),
+)
 
 == Indicadores clave de rendimiento (KPI)
 
