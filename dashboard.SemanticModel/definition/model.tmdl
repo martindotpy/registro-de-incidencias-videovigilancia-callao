@@ -10,5 +10,16 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["DevMode"]
 
+annotation PBI_QueryOrder = ["public dim_case_type","public dim_location","public dim_origin","public fact_incident","public dim_time"]
+
+ref table 'public dim_case_type'
+ref table 'public dim_location'
+ref table 'public dim_origin'
+ref table 'public fact_incident'
+ref table DateTableTemplate_6b874e1e-a8e3-4039-890e-1dda037e5448
+ref table LocalDateTable_9a85f2e2-1131-49cc-a716-1c2c1d42e9d2
+ref table 'public dim_time'
+ref table LocalDateTable_e016e653-00e6-4793-b2d5-500897d515a9
+
 ref cultureInfo es-PE
 

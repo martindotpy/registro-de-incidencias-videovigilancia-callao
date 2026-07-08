@@ -1,0 +1,29 @@
+table 'public dim_origin'
+	lineageTag: 6117ff47-a1ca-407f-8460-dd8e72e58e02
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 7795d492-4814-4ff6-bec3-f5ddb6e250e8
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 5860e0e5-354e-42b6-ab43-ae3e110b4ad9
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_origin' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost:5432", "registro-incidencias"),
+				    public_dim_origin = Origen{[Schema="public",Item="dim_origin"]}[Data]
+				in
+				    public_dim_origin
+

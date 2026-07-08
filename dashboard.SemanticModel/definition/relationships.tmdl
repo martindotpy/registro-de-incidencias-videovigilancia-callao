@@ -1,0 +1,34 @@
+relationship 493e1168-2e86-4946-a5ae-7337abc62839
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public fact_incident'.attention_date
+	toColumn: LocalDateTable_9a85f2e2-1131-49cc-a716-1c2c1d42e9d2.Date
+
+relationship e1255e32-14be-4df4-bb64-efdb147eaadc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public dim_time'.date
+	toColumn: LocalDateTable_e016e653-00e6-4793-b2d5-500897d515a9.Date
+
+relationship 0fc03700-1cfa-4ba2-808f-8c67b166aa70
+	fromColumn: 'public fact_incident'.case_type_id
+	toColumn: 'public dim_case_type'.id
+
+	annotation PBI_IsFromSource = FS
+
+relationship 657d6f97-83e8-41c5-a5b8-73b4106effbb
+	fromColumn: 'public fact_incident'.location_id
+	toColumn: 'public dim_location'.id
+
+	annotation PBI_IsFromSource = FS
+
+relationship a15319c0-c486-4e60-8dea-2c00bf31cfd6
+	fromColumn: 'public fact_incident'.origin_id
+	toColumn: 'public dim_origin'.id
+
+	annotation PBI_IsFromSource = FS
+
+relationship ec7e9203-8955-4d2f-b16b-cf953e1a4650
+	fromColumn: 'public fact_incident'.time_id
+	toColumn: 'public dim_time'.id
+
+	annotation PBI_IsFromSource = FS
+

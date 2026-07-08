@@ -1,0 +1,29 @@
+table 'public dim_case_type'
+	lineageTag: 9359c55d-055c-426c-bc6b-2bf477b056c0
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: de772c90-0c7c-473e-a7e9-6bba6d41ec15
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 5551acb4-1c8b-4123-bd96-4a645473c224
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_case_type' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost:5432", "registro-incidencias"),
+				    public_dim_case_type = Origen{[Schema="public",Item="dim_case_type"]}[Data]
+				in
+				    public_dim_case_type
+

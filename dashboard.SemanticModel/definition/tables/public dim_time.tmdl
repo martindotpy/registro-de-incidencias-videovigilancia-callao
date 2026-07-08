@@ -1,0 +1,91 @@
+table 'public dim_time'
+	lineageTag: 1cf28834-9d61-4d42-957b-ba6bde85f43b
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 934ad40d-b623-4044-88ed-d1978b814fb5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 55c05524-c97c-4adf-8cf1-3a3e096af999
+		summarizeBy: none
+		sourceColumn: date
+
+		variation Variación
+			isDefault
+			relationship: e1255e32-14be-4df4-bb64-efdb147eaadc
+			defaultHierarchy: LocalDateTable_e016e653-00e6-4793-b2d5-500897d515a9.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 1a9748ef-5d13-45a8-8c18-80d4431233cd
+		summarizeBy: none
+		sourceColumn: time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 408cddc7-4917-446f-8087-1853aeb77897
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 689e66ec-142b-483e-9b53-07e1168b0bb2
+		summarizeBy: sum
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column day
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d261ca9-f396-4069-a0b4-0af326407e5d
+		summarizeBy: sum
+		sourceColumn: day
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_of_week
+		dataType: string
+		lineageTag: 7cb19d18-cad9-4abd-b087-8c755c3d69e6
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column turn
+		dataType: string
+		lineageTag: a2482b19-8e77-43ec-b87b-1ab0b3f60e93
+		summarizeBy: none
+		sourceColumn: turn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_time' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost:5432", "registro-incidencias"),
+				    public_dim_time = Origen{[Schema="public",Item="dim_time"]}[Data]
+				in
+				    public_dim_time
+

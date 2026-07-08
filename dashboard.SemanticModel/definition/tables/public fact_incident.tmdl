@@ -1,0 +1,111 @@
+table 'public fact_incident'
+	lineageTag: da60e5af-a544-45d7-9af2-699c27680687
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 25605d09-5a6e-41a7-bdff-7609f7b52776
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column case_number
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dc000d5-1054-4f96-a3f7-5b7822018adc
+		summarizeBy: sum
+		sourceColumn: case_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: 8f1bd7a2-b322-4172-af8b-49141e00755a
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: 3be3c06d-6aa7-4d0a-b01a-216c6ed4bbac
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column response_time_min
+		dataType: int64
+		formatString: 0
+		lineageTag: a1ad356f-d7d6-4a1d-8c81-29372202862f
+		summarizeBy: sum
+		sourceColumn: response_time_min
+
+		annotation SummarizationSetBy = Automatic
+
+	column attention_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 66bfdbaa-e2af-4f8b-8332-42b0af8d73bc
+		summarizeBy: none
+		sourceColumn: attention_date
+
+		variation Variación
+			isDefault
+			relationship: 493e1168-2e86-4946-a5ae-7337abc62839
+			defaultHierarchy: LocalDateTable_9a85f2e2-1131-49cc-a716-1c2c1d42e9d2.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column case_type_id
+		dataType: int64
+		formatString: 0
+		lineageTag: f295bc18-cf05-4ce8-afb1-18e1b8ec21b6
+		summarizeBy: none
+		sourceColumn: case_type_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column location_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 821faabd-0429-4dff-bff4-01f4faca2862
+		summarizeBy: none
+		sourceColumn: location_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column origin_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c63e99c-91e5-461a-9e70-32039c06847c
+		summarizeBy: none
+		sourceColumn: origin_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fbdf5816-7b1a-49e4-9275-c24283724aa7
+		summarizeBy: none
+		sourceColumn: time_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public fact_incident' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost:5432", "registro-incidencias"),
+				    public_fact_incident = Origen{[Schema="public",Item="fact_incident"]}[Data]
+				in
+				    public_fact_incident
+

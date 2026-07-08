@@ -1,0 +1,46 @@
+table 'public dim_location'
+	lineageTag: 9b134cac-0caf-42c8-b0d8-92f824286ff4
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 57a221c8-f196-4d18-9afc-dc9e766a57e5
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column zone_number
+		dataType: int64
+		formatString: 0
+		lineageTag: a029391e-e5a1-4ea6-90ad-d0ab0b421b91
+		summarizeBy: none
+		sourceColumn: zone_number
+
+		annotation SummarizationSetBy = Automatic
+
+	column sector_name
+		dataType: string
+		lineageTag: b5b4af7e-88ba-4fd7-add6-359c990dc725
+		summarizeBy: none
+		sourceColumn: sector_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column decentralized_base
+		dataType: string
+		lineageTag: c3a87655-1fa3-4a99-8069-3aef10a1e8e9
+		summarizeBy: none
+		sourceColumn: decentralized_base
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_location' = m
+		mode: import
+		source =
+				let
+				    Origen = PostgreSQL.Database("localhost:5432", "registro-incidencias"),
+				    public_dim_location = Origen{[Schema="public",Item="dim_location"]}[Data]
+				in
+				    public_dim_location
+
