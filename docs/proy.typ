@@ -1,37 +1,38 @@
 #import "@preview/versatile-apa:7.2.0": versatile-apa
-#import "@preview/callisto:0.3.0": *
+// #import "@preview/callisto:0.3.0": *
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.10": *
-#import "@preview/cmarker:0.1.10"
-#import "@preview/mitex:0.2.7": mitex
+// #import "@preview/cmarker:0.1.10"
+// #import "@preview/mitex:0.2.7": mitex
 
 // Style
 #show: versatile-apa.with(font-size: 11pt)
 #show: codly-init.with()
-#let render = render.with(
-  template: (
-    raw: (cell, ..args) => source(cell),
-    markdown: (cell, handlers: auto, ..args) => read-mime(
-      source(cell).text,
-      format: "text/markdown",
-      handlers: handlers,
-    ),
-    input: (cell, input-args: none, ..args) => source(cell, ..input-args),
-    output: (cell, output-args: none, ..args) => outputs(
-      cell,
-      ..output-args,
-      result: "value",
-    ).join(),
-  ),
-  handlers: (
-    "text/markdown": cmarker.render.with(
-      math: mitex,
-      scope: (
-        image: (path, alt: none) => block(figure(image(path), caption: alt)),
-      ),
-    ),
-  ),
-)
+// (martindotpy): Maybe useful some day
+// #let render = render.with(
+//   template: (
+//     raw: (cell, ..args) => source(cell),
+//     markdown: (cell, handlers: auto, ..args) => read-mime(
+//       source(cell).text,
+//       format: "text/markdown",
+//       handlers: handlers,
+//     ),
+//     input: (cell, input-args: none, ..args) => source(cell, ..input-args),
+//     output: (cell, output-args: none, ..args) => outputs(
+//       cell,
+//       ..output-args,
+//       result: "value",
+//     ).join(),
+//   ),
+//   handlers: (
+//     "text/markdown": cmarker.render.with(
+//       math: mitex,
+//       scope: (
+//         image: (path, alt: none) => block(figure(image(path), caption: alt)),
+//       ),
+//     ),
+//   ),
+// )
 #set bibliography(style: "ieee")
 
 #codly(languages: codly-languages)
