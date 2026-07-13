@@ -105,7 +105,7 @@
 
 
 // Sections
-#outline(depth: 2)
+#outline()
 
 #show heading.where(level: 1): h => {
   colbreak()
@@ -175,10 +175,10 @@ negocios definan, validen y ajusten rápidamente sus modelos de negocio,
 centrándose en problemas, soluciones y propuestas de valor @ESIC2025. Por lo
 que, representa un enfoque ágil y analítico.
 
-#align(center, figure(
+#block(align(center, figure(
   image("/src/assets/img/canvas.png", width: 100%),
   caption: [Lienzo Canvas del modelo de negocio],
-))
+)))
 
 == Análisis PESTEL
 
@@ -189,10 +189,10 @@ Tiene el propósito de identificar factores macroambientales que influyen en la
 toma de decisiones, la competitividad y la sostenibilidad de un modelo de
 negocio.
 
-#align(center, figure(
+#block(align(center, figure(
   image("/src/assets/img/pestel.jpg", width: 100%),
   caption: [Diagrama de PESTEL],
-))
+)))
 
 == Matriz FODA
 
@@ -203,10 +203,10 @@ entorno, generando estrategias que potencien las fortalezas, aprovechen las
 oportunidades, reduzcan las debilidades y mitiguen las amenazas
 @PonceTalancn2007.
 
-#align(center, figure(
+#block(align(center, figure(
   image("/src/assets/img/foda.jpeg", width: 100%),
   caption: [Matriz FODA],
-))
+)))
 
 == Diagrama de la problemática (Ishikawa)
 
@@ -216,10 +216,10 @@ raíces de un problema organizacional o de procesos. Con el propósito de
 facilitar la detección de cuellos de botella y causas reales que afectan la
 calidad, eficiencia o resultados de una organización @SalesforceLATAM2024.
 
-#align(center, figure(
+#block(align(center, figure(
   image("/src/assets/img/ishikawa.jpeg", width: 100%),
   caption: [Diagrama de Ishikawa],
-))
+)))
 
 == Problemática central del negocio
 
@@ -456,8 +456,15 @@ categoría del caso, fechas y horas. El archivo pesa 39.39 MB y se almacena
 localmente con un patrón de escritura atómica (archivo temporal `.tmp` +
 renombrado) para evitar corrupción en caso de interrupción.
 
-// Renderize example
-// #render(nb: json("/src/content/docs/etl/extraccion.ipynb"))
+#block(align(center, figure(
+  image("/src/assets/img/vista-web-extraccion.png", width: 100%),
+  caption: [Extracción — vista web],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-notebook-extraccion.png", width: 100%),
+  caption: [Extracción — VS Code],
+)))
 
 === Transformación
 
@@ -488,6 +495,16 @@ normalización sobre los 219 373 registros:
 El resultado final son 218 591 registros limpios exportados a
 `registro_de_incidencias_clean.csv`.
 
+#block(align(center, figure(
+  image("/src/assets/img/vista-web-transformacion.png", width: 100%),
+  caption: [Transformación — vista web],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-notebook-transformacion.png", width: 100%),
+  caption: [Transformación — VS Code],
+)))
+
 === Carga
 
 El cuaderno de carga inserta los datos limpios en una base de datos PostgreSQL
@@ -505,6 +522,67 @@ utilizando un esquema estrella con Tortoise ORM. El proceso incluye:
   tiempo de respuesta calculado como la diferencia entre `case_time` y
   `case_attention_time`.
 
+#block(align(center, figure(
+  image("/src/assets/img/vista-web-carga.png", width: 100%),
+  caption: [Carga — vista web],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-notebook-carga.png", width: 100%),
+  caption: [Carga — VS Code],
+)))
+
+Las tablas resultantes en la base de datos PostgreSQL pueden visualizarse
+directamente desde Drizzle Studio, donde se aprecian las dimensiones y la tabla
+de hechos con sus registros cargados:
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-tabla-dim_time.png", width: 100%),
+  caption: [DimTime en Drizzle Studio],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-tabla-dim_location.png", width: 100%),
+  caption: [DimLocation en Drizzle Studio],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-tabla-dim_case_type.png", width: 100%),
+  caption: [DimCaseType en Drizzle Studio],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-tabla-dim_origin.png", width: 100%),
+  caption: [DimOrigin en Drizzle Studio],
+)))
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-tabla-fact_incident.png", width: 100%),
+  caption: [FactIncident en Drizzle Studio],
+)))
+
+== Construcción del dashboard en Power BI
+
+El dashboard se desarrolló en Power BI Desktop conectándose directamente a la
+base de datos PostgreSQL donde se cargaron los datos limpios en el esquema
+estrella. Se incorporaron las siguientes visualizaciones:
+
++ Tarjetas de KPIs: total de incidencias y tiempo promedio de respuesta en
+  minutos.
++ Mapa de calor geográfico: distribución espacial de incidencias con gradientes
+  de calor proporcionales al volumen por coordenada.
++ Gráfico de líneas: tendencia mensual de sept. — nov. 2025.
++ Gráfico de anillo: distribución por turnos (noche, madrugada, tarde, mañana).
++ Treemap: carga por base descentralizada (39 bases).
++ Filtros: slicer de los meses registrados y segmentadores de botones para las
+  zonas.
+
+#block(align(center, figure(
+  image("/src/assets/img/vista-powerbi-dashboard.png", width: 100%),
+  caption: [
+    Vista del dashboard en Power BI
+  ],
+)))
 
 = Storytelling con datos
 
@@ -515,12 +593,12 @@ sección se presenta el dashboard construido en Power BI como eje central de un
 relato en cuatro actos, anclado en noticias y reportes oficiales sobre seguridad
 ciudadana en el Callao.
 
-#align(center, figure(
+#block(align(center, figure(
   image("/src/assets/img/dashboard.png", width: 100%),
   caption: [
-    Dashboard de incidencias de videovigilancia
+    Dashboard de casos de videovigilancia
   ],
-))
+)))
 
 == Acto I: El panorama — ¿Qué está pasando en el Callao?
 
