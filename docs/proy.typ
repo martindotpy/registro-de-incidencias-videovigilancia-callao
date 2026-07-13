@@ -162,7 +162,7 @@ estimada de más de 1 millón de habitantes @PortalTransparencia,
 
 El sistema de monitoreo cuenta con una red de cámaras distribuidas en 3 zonas
 principales, operadas por bases descentralizadas y una central de monitoreo. El
-dataset analizado contiene 219,373 incidencias, de las cuales 218,591 resultaron
+dataset analizado contiene 219 373 incidencias, de las cuales 218 591 resultaron
 válidas tras el proceso de limpieza @MunicipalidadCallao2024. Estas incidencias
 abarcan 8 canales de reporte, 10 categorías de caso y 39 bases descentralizadas,
 lo que evidencia la escala operativa y la importancia de herramientas de
@@ -224,7 +224,7 @@ calidad, eficiencia o resultados de una organización @SalesforceLATAM2024.
 == Problemática central del negocio
 
 La Municipalidad Provincial del Callao genera un volumen elevado de datos
-derivados del sistema de videovigilancia, con más de 219,000 incidencias
+derivados del sistema de videovigilancia, con más de 219 000 incidencias
 registradas en la plataforma de datos abiertos @MunicipalidadCallao2024. Sin
 embargo, la ausencia de herramientas de análisis y visualización adecuadas
 limita la capacidad de identificar patrones, tendencias espaciotemporales y
@@ -344,7 +344,7 @@ mantener la granularidad en la tabla de hechos.
 
 === Tablas de dimensión
 
-- DimTime (95,526 registros): Una fila por cada combinación única de fecha y
+- DimTime (95 526 registros): Una fila por cada combinación única de fecha y
   hora. Contiene campos derivados: año, mes, día, día de la semana y turno
   (Madrugada, Mañana, Tarde, Noche).
 - DimLocation (168 registros): Una fila por cada combinación de zona, sector y
@@ -359,7 +359,7 @@ mantener la granularidad en la tabla de hechos.
 
 === Tabla de hechos
 
-- FactIncident (218,591 registros): Cada fila representa una incidencia única,
+- FactIncident (218 591 registros): Cada fila representa una incidencia única,
   vinculada a las cuatro dimensiones mediante claves foráneas. Incluye
   coordenadas geográficas (latitud y longitud), número de caso y tiempo de
   respuesta calculado como la diferencia entre la hora del caso y la hora de
@@ -450,7 +450,7 @@ https://registro-incidencias-videovigilancia-callao.martindotpy.dev.
 === Extracción
 
 El cuaderno de extracción descarga el archivo CSV fuente desde la plataforma de
-datos abiertos del Estado Peruano. El dataset contiene 219,373 registros con 18
+datos abiertos del Estado Peruano. El dataset contiene 219 373 registros con 18
 columnas, incluyendo información sobre origen del reporte, ubicación geográfica,
 categoría del caso, fechas y horas. El archivo pesa 39.39 MB y se almacena
 localmente con un patrón de escritura atómica (archivo temporal `.tmp` +
@@ -462,7 +462,7 @@ renombrado) para evitar corrupción en caso de interrupción.
 === Transformación
 
 El cuaderno de transformación aplica las siguientes operaciones de limpieza y
-normalización sobre los 219,373 registros:
+normalización sobre los 219 373 registros:
 
 + Eliminación de nulos: Se descartan 145 filas (0.07%) con valores nulos en la
   columna ZONA.
@@ -485,7 +485,7 @@ normalización sobre los 219,373 registros:
 + Renombrado a snake_case: Todas las columnas se renombran al formato inglés
   para consistencia técnica.
 
-El resultado final son 218,591 registros limpios exportados a
+El resultado final son 218 591 registros limpios exportados a
 `registro_de_incidencias_clean.csv`.
 
 === Carga
@@ -495,18 +495,194 @@ utilizando un esquema estrella con Tortoise ORM. El proceso incluye:
 
 + Migración del esquema: Se ejecuta `migrate_db()` para crear o actualizar las
   tablas según las definiciones del modelo.
-+ Carga de dimensiones: Se insertan los valores únicos en DimTime (95,526
++ Carga de dimensiones: Se insertan los valores únicos en DimTime (95 526
   registros), DimLocation (168 registros), DimCaseType (10 registros) y
   DimOrigin (8 registros). Se construyen diccionarios de mapeo valor a id para
   las relaciones.
-+ Carga de la tabla de hechos: Se insertan los 218,591 registros de FactIncident
-  en lotes de 10,000 usando `bulk_create()`. Cada registro incluye las claves
++ Carga de la tabla de hechos: Se insertan los 218 591 registros de FactIncident
+  en lotes de 10 000 usando `bulk_create()`. Cada registro incluye las claves
   foráneas de las dimensiones, coordenadas geográficas en formato `Decimal` y el
   tiempo de respuesta calculado como la diferencia entre `case_time` y
   `case_attention_time`.
 
 
 = Storytelling con datos
+
+El storytelling con datos es una técnica narrativa que combina visualización de
+datos, contexto periodístico y estructura dramática para transformar cifras
+abstractas en una historia comprensible y accionable @Duarte2019. En esta
+sección se presenta el dashboard construido en Power BI como eje central de un
+relato en cuatro actos, anclado en noticias y reportes oficiales sobre seguridad
+ciudadana en el Callao.
+
+#align(center, figure(
+  image("/src/assets/img/dashboard.png", width: 100%),
+  caption: [
+    Dashboard de incidencias de videovigilancia
+  ],
+))
+
+== Acto I: El panorama — ¿Qué está pasando en el Callao?
+
+El Callao atraviesa una crisis de seguridad sin precedentes. Según el Instituto
+Nacional de Estadística e Informática (INEI), la tasa de homicidios en la
+Provincia Constitucional alcanzó 23.6 por cada 100 mil habitantes en 2025,
+convirtiéndola en la segunda región más violenta del país, solo por detrás de
+Madre de Dios @INEICriminalidad2025. Entre enero y octubre de 2025 se
+registraron 165 homicidios, superando los 146 de todo 2024 y marcando un récord
+histórico @LaRepublicaHomicidiosOct2025. Las extorsiones también se dispararon
+un 57% respecto al año anterior, con 707 denuncias entre enero y septiembre
+de 2025.
+
+Frente a este escenario, la Municipalidad Provincial del Callao ha desplegado
+una de las estrategias más ambiciosas de videovigilancia del país. En mayo de
+2025 se anunció la instalación de 730 cámaras de última generación, de las
+cuales 400 ya estaban operativas @VideovigilanciaCallao2025. El Gobierno
+Regional del Callao, por su parte, invirtió más de S/ 16 millones en 334 cámaras
+adicionales y 8 centros de monitoreo @GoreCallaoCamaras2024. En Bellavista, una
+megaobra de S/ 24.5 millones incorpora 220 cámaras con inteligencia artificial,
+lectores de placas y drones de vigilancia.
+
+El dashboard presenta, en su franja superior, los indicadores clave que resumen
+la magnitud del sistema en el período de tres meses analizado (septiembre a
+noviembre de 2025):
+
+- *Total de incidencias:* 218 591 casos registrados en septiembre-noviembre de
+  2025.
+- *Tiempo promedio de respuesta:* 12.47 minutos entre la hora del caso y la hora
+  de atención.
+- *Cobertura:* 3 zonas operativas y filtros por mes.
+- *Canales de reporte:* 8 fuentes, dominadas por las cámaras con un 97.6% de los
+  registros.
+
+El mapa de calor geográfico, ubicado en la sección izquierda del dashboard,
+revela la distribución espacial de las incidencias. La mayor concentración se
+observa en el Callao Cercado, extendiéndose hacia el sur en dirección a La Perla
+y San Miguel, así como hacia el norte en Bellavista. Estas zonas coinciden con
+los distritos que lideran las estadísticas de homicidios y extorsión
+@LaRepublicaHomicidiosOct2025. Esta correlación entre los datos del sistema de
+videovigilancia y las cifras oficiales de criminalidad valida la utilidad del
+dashboard como herramienta de diagnóstico territorial.
+
+== Acto II: ¿Cuándo y cómo ocurren? — Patrones temporales y canales de reporte
+
+El análisis temporal de las 218 591 incidencias revela patrones que desafían
+algunas intuiciones. La distribución por turnos es notablemente uniforme:
+
+- Noche: 59 805 incidencias (27.4%).
+- Madrugada: 58 671 incidencias (26.8%).
+- Tarde: 53 924 incidencias (24.7%).
+- Mañana: 46 191 incidencias (21.1%).
+
+Que los turnos nocturno y madrugada concentren el 54.2% de las incidencias tiene
+implicancias operativas directas: el despliegue de personal de serenazgo y la
+coordinación con la Policía Nacional deben reforzarse en estas ventanas
+horarias. La Central de Emergencias del Callao, que en julio de 2025 ya superaba
+las 500 mil atenciones acumuladas en solo 27 meses de operación
+@CentralEmergenciasCallao2025, y que para junio de 2026 alcanzó los 2 millones
+de atenciones @AppCallaoSeguro2026, es un ejemplo del impacto que tiene una
+respuesta oportuna.
+
+La tendencia mensual, visualizada como un gráfico de líneas en el dashboard,
+muestra un patrón de crecimiento marcado: septiembre registra 54 mil
+incidencias, octubre salta a 84 mil (un incremento del 55.6%) y noviembre se
+mantiene en 80 mil. Este repunte de casi 30 mil casos entre septiembre y octubre
+podría correlacionarse con factores estacionales, cambios operativos en la
+cobertura de cámaras o incremento real de la actividad delictiva. Identificar la
+causa raíz de este pico es fundamental para la planificación de recursos.
+
+El análisis por canal de reporte es igualmente revelador: las cámaras CCTV
+representan el 97.6% de las incidencias (213 282 registros), seguidas por
+WhatsApp (1.5%), App Callao Seguro, teléfono, botón de pánico y atención
+presencial. Esta concentración extrema sugiere que el sistema es
+fundamentalmente _instrumental_ (detección automatizada por cámaras), pero
+también revela una oportunidad: los canales ciudadanos (App, WhatsApp, botón de
+pánico) están significativamente subutilizados.
+
+== Acto III: ¿De qué tipo y dónde? — Categorización geográfica y temática
+
+La desagregación por categoría de caso ofrece la fotografía más nítida de la
+problemática chalaca:
+
+- *Tránsito y Seguridad Vial:* 141 200 incidencias (64.6%).
+- *Ambientales:* 36 702 incidencias (16.8%).
+- *Fiscalización y Defensa Civil:* 21 751 incidencias (10.0%).
+- *Apoyo al Ciudadano:* 16 621 incidencias (7.6%).
+- *Seguridad Ciudadana:* 1 700 incidencias (0.8%).
+- Otras categorías (App Callao Seguro, Protección Familiar, Salud, Casos
+  Especiales, Ciudadano): menos del 0.5% en conjunto.
+
+La categoría "Tránsito y Seguridad Vial" domina con casi dos tercios del total.
+Este hallazgo es consistente con la realidad del Callao como puerto principal
+del Perú, donde la congestión vehicular y los incidentes de tránsito son
+panorama cotidiano. Según la Asociación para el Fomento de la Infraestructura
+Nacional (AFIN), el tráfico en Lima y Callao genera pérdidas económicas por S/
+27 691 millones al año @ComexPeruInseguridad2026. La Municipalidad ha respondido
+con medidas como la autorización de nuevas rutas para carga pesada y mesas de
+trabajo con operadores portuarios para aliviar la congestión en la zona
+portuaria.
+
+El treemap de incidencias por base descentralizada permite identificar las
+unidades con mayor carga operativa. Las cinco bases con más registros son:
+
+1. C — Oquendo: 49 829 incidencias.
+2. C — Ramon Castilla: 32 881 incidencias.
+3. C — Quilca: 26 333 incidencias.
+4. C — Tomas Valle: 22 918 incidencias.
+5. C — Obelisco: 18 266 incidencias.
+
+Estas cinco bases concentran el 68.8% del total de incidencias, lo que sugiere
+una distribución desigual de la carga laboral que merece atención gerencial. Las
+bases C2 (segundo nivel de cobertura) y las Bases Descentralizadas (BD) tienen
+volúmenes significativamente menores, lo que podría indicar diferencias en la
+densidad de cámaras, en la cobertura geográfica o en la efectividad operativa.
+
+== Acto IV: Insights y acción — ¿Qué hacer con estos datos?
+
+El dashboard no es un fin en sí mismo, sino un medio para la toma de decisiones
+informada. A partir de los patrones identificados, se derivan las siguientes
+recomendaciones estratégicas:
+
+=== Reforzar la cobertura en turnos críticos
+
+El 54.2% de las incidencias ocurre en noche y madrugada. Se recomienda asignar
+recursos de serenazgo y personal de monitoreo proporcionalmente a estos turnos,
+así como coordinar con la PNP para optimizar los patrullajes en las ventanas de
+mayor actividad.
+
+=== Fortalecer los canales de participación ciudadana
+
+Las cámaras representan el 97.6% de los reportes, mientras que la App Callao
+Seguro y WhatsApp apenas alcanzan el 1.5% y 0.2%, respectivamente. Considerando
+que la App Callao Seguro y la Central de Emergencias `*3333` ya han superado los
+2 millones de atenciones acumuladas @AppCallaoSeguro2026, existe una base de
+usuarios activos sobre la cual impulsar campañas de adopción digital. Una
+estrategia de comunicación y educación ciudadana podría aumentar la
+participación de canales digitales, descentralizando el reporte y reduciendo la
+dependencia exclusiva de las cámaras.
+
+=== Redistribuir recursos hacia bases sobrecargadas
+
+Las bases C — Oquendo y C — Ramon Castilla concentran el 37.8% de las
+incidencias. Se sugiere evaluar la ampliación de personal, equipamiento o
+incluso la creación de nuevas sub-bases en sus sectores de influencia para
+equilibrar la carga operativa.
+
+=== Integrar el dashboard con la Central de Emergencias
+
+La Central de Emergencias del Callao, que alcanzó el millón de atenciones en
+octubre de 2025, opera de manera independiente al sistema de videovigilancia.
+Integrar ambas fuentes de datos en un solo tablero de control permitiría una
+visión holística de la seguridad ciudadana: cruzar incidencias de cámaras con
+llamadas de emergencia, tiempos de despacho y resolución.
+
+=== Priorizar intervenciones de tránsito y seguridad vial
+
+Dado que el 64.6% de las incidencias corresponde a tránsito, se recomienda
+establecer una mesa de trabajo específica entre la Gerencia de Transporte Urbano
+y la Central de Monitoreo para identificar los puntos de congestión recurrente y
+diseñar intervenciones focalizadas (semáforos inteligentes, desvíos,
+fiscalización electrónica).
 
 
 = Conclusiones, recomendaciones y lecciones aprendidas

@@ -2,17 +2,41 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.10.0/schema.json",
   "name": "d0cfecc8a0f8933acc78",
   "position": {
-    "x": 0,
-    "y": 213.00911854103344,
+    "x": 32,
+    "y": 128,
     "z": 0,
-    "height": 506.74772036474167,
-    "width": 671.12462006079033,
+    "height": 368,
+    "width": 320,
     "tabOrder": 0
   },
   "visual": {
     "visualType": "azureMap",
     "query": {
       "queryState": {
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public fact_incident"
+                        }
+                      },
+                      "Property": "case_number"
+                    }
+                  },
+                  "Function": 2
+                }
+              },
+              "queryRef": "Sum(public fact_incident.case_number)",
+              "nativeQueryRef": "Cantidad de casos",
+              "displayName": "Cantidad de casos"
+            }
+          ]
+        },
         "X": {
           "projections": [
             {
@@ -26,8 +50,9 @@
                   "Property": "longitude"
                 }
               },
-              "queryRef": "Avg(public fact_incident.longitude)",
-              "nativeQueryRef": "longitude"
+              "queryRef": "public fact_incident.longitude",
+              "nativeQueryRef": "Longitud",
+              "displayName": "Longitud"
             }
           ]
         },
@@ -44,8 +69,9 @@
                   "Property": "latitude"
                 }
               },
-              "queryRef": "Avg(public fact_incident.latitude)",
-              "nativeQueryRef": "latitude"
+              "queryRef": "public fact_incident.latitude",
+              "nativeQueryRef": "Latitud",
+              "displayName": "Latitud"
             }
           ]
         }
@@ -86,21 +112,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-12.010398394659887D"
+                  "Value": "-12.0038082467253D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-77.11635883640412D"
+                  "Value": "-77.11761675999998D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "10.96D"
+                  "Value": "10.47D"
                 }
               }
             }
@@ -126,7 +152,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -194,40 +220,121 @@
             }
           }
         }
+      ],
+      "heatMapLayer": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "heatMapIntensity": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "heatMapUseSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "heatMapRadius": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "heatMapColorHigh": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FF0000'"
+                    }
+                  }
+                }
+              }
+            },
+            "heatMapColorLow": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0000FF'"
+                    }
+                  }
+                }
+              }
+            },
+            "heatMapColorCenter": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFA500'"
+                    }
+                  }
+                }
+              }
+            },
+            "mapTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Mapa de calor geográfico de casos'"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "a0194269550bb014834d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "public fact_incident"
-              }
-            },
-            "Property": "longitude"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "cd80897930bd78d47d32",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "public fact_incident"
-              }
-            },
-            "Property": "latitude"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }
