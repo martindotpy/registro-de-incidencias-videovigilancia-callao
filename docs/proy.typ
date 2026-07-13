@@ -625,11 +625,11 @@ portuaria.
 El treemap de incidencias por base descentralizada permite identificar las
 unidades con mayor carga operativa. Las cinco bases con más registros son:
 
-1. C — Oquendo: 49 829 incidencias.
-2. C — Ramon Castilla: 32 881 incidencias.
-3. C — Quilca: 26 333 incidencias.
-4. C — Tomas Valle: 22 918 incidencias.
-5. C — Obelisco: 18 266 incidencias.
++ C — Oquendo: 49 829 incidencias.
++ C — Ramon Castilla: 32 881 incidencias.
++ C — Quilca: 26 333 incidencias.
++ C — Tomas Valle: 22 918 incidencias.
++ C — Obelisco: 18 266 incidencias.
 
 Estas cinco bases concentran el 68.8% del total de incidencias, lo que sugiere
 una distribución desigual de la carga laboral que merece atención gerencial. Las
