@@ -765,5 +765,65 @@ fiscalización electrónica).
 
 = Conclusiones, recomendaciones y lecciones aprendidas
 
+== Conclusiones
+
+- Mediante el desarrollo del presente proyecto se logró transformar una gran
+  cantidad de datos de incidencias de videovigilancia en información más
+  ordenada, comprensible y útil para la toma de decisiones. De los 219 373
+  registros iniciales, se obtuvieron 218 591 registros válidos después de
+  realizar la limpieza, normalización y validación de los datos.
+- El modelo estrella desarrollado permitió organizar correctamente la
+  información mediante una tabla de hechos y dimensiones relacionadas con el
+  tiempo, ubicación, tipo de incidencia y canal de origen. Gracias a ello, fue
+  posible realizar consultas y análisis de una manera más rápida y ordenada.
+- El dashboard permitió identificar que el 64.6% de las incidencias se encuentra
+  relacionado con tránsito y seguridad vial. Esto demuestra que, además de los
+  problemas de seguridad ciudadana, existe una problemática importante
+  relacionada con la congestión vehicular, el transporte y el control de las
+  vías en el Callao.
+- Nuestro proyecto demuestra que la inteligencia de negocios no solo permite
+  presentar gráficos, sino también convertir datos históricos en información que
+  puede apoyar la distribución de recursos, la identificación de zonas críticas
+  y la planificación de acciones de seguridad.
+
+== Recomendaciones
+
+- Se debería reforzar la cantidad de operadores, personal de serenazgo y
+  unidades de patrullaje durante los turnos de noche y madrugada, ya que estos
+  horarios presentan la mayor concentración de incidencias. Esta distribución
+  debe realizarse considerando también las zonas y bases con mayor carga
+  operativa.
+- Debido a que el 97.6% de los registros proviene de las cámaras, se recomienda
+  promover el uso de otros canales como WhatsApp, la aplicación Callao Seguro,
+  el teléfono y el botón de pánico. Esto permitiría obtener una participación
+  más directa de la ciudadanía y reducir la dependencia de un solo canal de
+  información.
+- Nuestro equipo notó que el flujo de datos partía de bases de videovigilancia
+  descentralizadas, lo cual no es sostenible si se requiere de un tablero
+  operativo. Es por ello que se optó por automatizar el proceso ETL (extracción,
+  transformación y carga) con validaciones de calidad programadas, en lugar de
+  depender de cargas manuales cada cierto tiempo. Aplicar este proceso ahorra el
+  trabajo repetitivo y asegura que el dashboard siempre refleje información
+  actualizada y confiable, detectando automáticamente registros duplicados o
+  inconsistentes antes de que lleguen al modelo estrella.
+
+== Lecciones aprendidas
+
+- La elaboración del presente proyecto nos permitió entender que modelar bien
+  los datos a través del esquema estrella no es un paso aleatorio antes de hacer
+  el dashboard, sino la base de todo. Si la granularidad de la tabla de hechos o
+  las relaciones con las dimensiones están mal planteadas desde el inicio,
+  Traería consigo KPIs mal calculados, medidas que no filtran bien, resultados
+  que carecen de sentido.
+- La limpieza de datos es un punto importante, pues de 219 373 registros
+  originales, terminamos con 218 591 válidos después de normalizar y validar.
+  Ese proceso de descartar 782 registros nos hizo entender que "tener muchos
+  datos" no es lo mismo que "tener datos útiles", y que gran parte del trabajo
+  real de BI está en depurar antes de visualizar.
+- Trabajar con datos reales de seguridad ciudadana nos hizo más conscientes de
+  la responsabilidad que implica manejar este tipo de información, no es solo
+  mostrar gráficos, sino generar información que puede influir en decisiones de
+  despliegue de personal, asignación de recursos y priorización de zonas.
+
 
 #bibliography("refs.bib")

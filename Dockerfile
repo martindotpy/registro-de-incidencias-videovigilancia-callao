@@ -33,6 +33,7 @@ RUN uv run --only-group dev scripts/convert_notebooks.py
 COPY docs/ docs/
 
 RUN typst compile --root . docs/proy.typ public/proy.pdf
+RUN typst compile --root . docs/diapositivas.typ public/diapositivas.pdf
 
 
 FROM oven/bun:1-slim AS builder
@@ -59,6 +60,7 @@ COPY --from=converter /app/src/content/docs/ src/content/docs/
 
 # Copy compiled Typst PDF
 COPY --from=converter /app/public/proy.pdf public/proy.pdf
+COPY --from=converter /app/public/diapositivas.pdf public/diapositivas.pdf
 
 # Astro config and public files
 COPY astro.config.ts pwa-assets.config.ts ./

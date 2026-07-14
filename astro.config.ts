@@ -58,8 +58,13 @@ export default defineConfig({
           label: "Documentación",
           items: [
             {
-              label: "Proyecto final (PDF)",
+              label: "Informe",
               link: "/proy.pdf",
+              attrs: { target: "_blank" },
+            },
+            {
+              label: "Diapositivas",
+              link: "/diapositivas.pdf",
               attrs: { target: "_blank" },
             },
           ],
