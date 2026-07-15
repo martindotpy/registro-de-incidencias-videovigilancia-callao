@@ -827,3 +827,22 @@ fiscalización electrónica).
 
 
 #bibliography("refs.bib")
+
+
+= Anexos
+
+El código fuente completo del proyecto, incluyendo los cuadernos Jupyter de
+extracción, transformación y carga, se encuentra disponible públicamente en el
+repositorio de GitHub @RepoGithubProyecto, los cuadernos se pueden apreciar
+renderizados a un formato web más amigable en
+https://registro-incidencias-videovigilancia-callao.martindotpy.dev.
+
+#align(center, image(
+  "/src/assets/img/repositorio-github.png",
+  height: 1fr,
+))
+
+#align(center, image(
+  "/src/assets/img/pagina-web-del-proyecto.png",
+  height: 1fr,
+))
