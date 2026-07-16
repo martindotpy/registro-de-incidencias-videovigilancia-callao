@@ -39,138 +39,102 @@
 
 == Municipalidad Provincial del Callao
 
-La Municipalidad Provincial del Callao es la entidad de gobierno local
-responsable de la administración pública, prestación de servicios y regulación
-en la provincia constitucional del Callao, principal puerto del Perú y uno de
-los distritos más densamente poblados del país @PortalTransparencia.
-
-Opera el *Sistema de Monitoreo y Videovigilancia*: infraestructura de cámaras
-CCTV distribuida en 3 zonas geográficas, cada una subdividida en sectores
-atendidos por bases descentralizadas @VideovigilanciaCallao2025. Las incidencias
-se reportan por múltiples canales: cámaras, WhatsApp, app móvil, teléfono, botón
-de pánico y atención presencial.
-
-== Misión y Visión
-
 #cols[
   *Misión*
 
   Proteger a los ciudadanos del Callao mediante un sistema de monitoreo y
-  videovigilancia eficiente, oportuno y transparente, garantizando la atención
-  integral de incidencias y la coordinación interinstitucional para la
-  prevención y reducción de la criminalidad.
-][
+  videovigilancia eficiente, oportuno y transparente.
+
   *Visión*
 
   Consolidar un sistema de seguridad ciudadana referente en el país, reconocido
   por su eficiencia operativa, uso responsable de la tecnología y capacidad de
-  respuesta, contribuyendo al bienestar y desarrollo sostenible del Callao.
+  respuesta.
+][
+  *Contexto*
+
+  Entidad de gobierno local que opera el Sistema de Monitoreo y Videovigilancia:
+  3 zonas geográficas, bases descentralizadas y central de monitoreo. 6
+  distritos, más de 1 millón de habitantes @PortalTransparencia.
 ]
-
-== Industria y tamaño
-
-- Sector de *gobierno local y seguridad pública*
-- 6 distritos (Callao, Bellavista, Carmen de la Legua-Reque, La Perla, La Punta
-  y Mi Perú), más de 1 millón de habitantes @PortalTransparencia
-  @VideovigilanciaCallao2025
-- Red de cámaras en 3 zonas, bases descentralizadas y una central de monitoreo
 
 #focus-slide[
   *219 373* incidencias registradas, *218 591* válidas tras la limpieza \
-  8 canales de reporte · 10 categorías de caso · 39 bases descentralizadas
+  8 canales de reporte · 10 categorías · 39 bases descentralizadas
   #text(size: 0.5em, fill: gray)[@MunicipalidadCallao2024]
 ]
 
-== Modelo de negocio: Lienzo Canvas
+== Canvas
 
 #align(center)[
-  #image("/src/assets/img/canvas.png", width: 70%)
+  #image("/src/assets/img/canvas.png", height: 1fr)
 ]
 
-== Análisis PESTEL
+== Pestel
 
 #align(center)[
-  #image("/src/assets/img/pestel.jpg", width: 60%)
+  #image("/src/assets/img/pestel.jpg", height: 1fr)
 ]
 
-== Matriz FODA
+== FODA
 
 #align(center)[
-  #image("/src/assets/img/foda.jpeg", width: 58%)
+  #image("/src/assets/img/foda.jpeg", height: 1fr)
 ]
 
 == Diagrama de Ishikawa
 
 #align(center)[
-  #image("/src/assets/img/ishikawa.jpeg", width: 62%)
+  #image("/src/assets/img/ishikawa.jpeg", height: 1fr)
 ]
 
-== Problemática central del negocio
-
-Más de *219 000* incidencias registradas en la plataforma de datos abiertos
-@MunicipalidadCallao2024, pero la ausencia de herramientas de análisis y
-visualización adecuadas limita:
-
-- La identificación de patrones y tendencias espaciotemporales
-- La detección de áreas prioritarias que requieren intervención
-- La distribución eficiente de recursos y planificación de patrol
-- La evaluación del desempeño operativo del sistema de seguridad
-
-== Objetivo general del proyecto
+== Problemática y objetivos
 
 #focus-slide[
-  Diseñar e implementar un sistema de inteligencia de negocios que permita el
-  análisis descriptivo de las incidencias de videovigilancia en el Callao,
-  facilitando la identificación de patrones críticos y la toma de decisiones
-  informada para la optimización de la seguridad ciudadana.
+  Procesar manualmente más de *219 000* incidencias históricas es inviable para
+  la gestión pública. Sin herramientas de BI, se limita la identificación de
+  patrones, la distribución eficiente de recursos y la capacidad de respuesta
+  @MunicipalidadCallao2024.
 ]
 
-== Objetivos específicos
+*Objetivo general:* Diseñar e implementar un sistema de inteligencia de negocios
+para el análisis descriptivo de incidencias de videovigilancia en el Callao,
+facilitando la identificación de patrones críticos y la toma de decisiones
+informada.
 
-+ Ejecutar el proceso ETL completo (Extracción, Transformación y Carga) sobre el
-  dataset de incidencias de la plataforma de datos abiertos del Estado Peruano.
-+ Construir un dashboard interactivo en Power BI con los indicadores clave de
-  rendimiento del sistema de videovigilancia.
-+ Analizar la distribución geográfica y temporal de las incidencias para
-  detectar zonas de alto riesgo y horarios críticos.
-+ Formular recomendaciones basadas en evidencia para mejorar la operatividad del
-  sistema de seguridad ciudadana.
+*Objetivos específicos:*
++ Ejecutar el proceso ETL completo sobre el dataset de incidencias
++ Construir un dashboard interactivo en Power BI con indicadores clave
++ Analizar la distribución geográfica y temporal de incidencias
++ Formular recomendaciones basadas en evidencia
 
 
 = Diseño Técnico de la Solución
 
-== Propuesta de solución en BI
-
-Pipeline de datos que transforma información cruda de incidencias en información
-estructurada y accionable: automatización del proceso ETL con Python,
-almacenamiento del dataset limpio en CSV y visualización interactiva mediante un
-dashboard en Power BI, con métricas en tiempo real para los tomadores de
-decisiones.
-
 == Arquitectura de Inteligencia de Negocios
+
+Pipeline ETL en cuatro etapas que transforma datos crudos en información
+estructurada y accionable.
 
 #cols[
   *1. Extracción*
-
   Descarga del CSV fuente desde datos abiertos del Estado Peruano con
   `curl-cffi`.
 
   *2. Transformación*
-
   Limpieza de nulos y duplicados, normalización de fechas/horas, estandarización
   de texto y eliminación de columnas redundantes con `pandas`.
 ][
   *3. Carga*
-
-  Exportación del dataset depurado a `registro_de_incidencias_clean.csv`.
+  Exportación del dataset depurado a CSV y carga en PostgreSQL con esquema
+  estrella mediante Tortoise ORM.
 
   *4. Visualización*
-
   Dashboard interactivo en Power BI con filtros dinámicos, KPIs y gráficos
   orientados a la toma de decisiones.
 ]
 
-== Herramientas utilizadas (1/2)
+== Herramientas utilizadas
 
 #align(center)[
   #table(
@@ -182,54 +146,25 @@ decisiones.
     [Python 3.14], [ETL y análisis], [Lenguaje principal del pipeline de datos],
     [`pandas`],
     [Manipulación de datos],
-    [Lectura, limpieza, transformación y exportación de datasets],
+    [Limpieza, transformación y exportación],
 
-    [`curl-cffi`],
-    [Descarga de datos],
-    [Extracción del CSV y del GeoJSON para validación geográfica],
-
-    [`orjson`],
-    [Parsing JSON],
-    [Lectura eficiente del GeoJSON con límites distritales],
-  )
-]
-
-== Herramientas utilizadas (2/2)
-
-#align(center)[
-  #table(
-    columns: (1fr, 1fr, 2.2fr),
-    align: (left, left, left),
-    inset: 6pt,
-    stroke: 0.5pt,
-    table.header([*Herramienta*], [*Función*], [*Justificación*]),
-    [`shapely`],
-    [Georreferenciación],
-    [Cálculo de polígonos y buffers dentro del Callao],
-
+    [`curl-cffi`], [Descarga de datos], [Extracción del CSV y GeoJSON],
+    [`orjson`], [Parsing JSON], [Lectura eficiente del GeoJSON],
+    [`shapely`], [Georreferenciación], [Cálculo de polígonos y buffers],
     [`Tortoise ORM`],
     [BD y migraciones],
-    [Mapeo objeto-relacional para PostgreSQL con esquema estrella],
+    [ORM para PostgreSQL con esquema estrella],
 
-    [`PostgreSQL`],
-    [Almacenamiento],
-    [Almacén de datos con soporte de tipos geográficos],
-
-    [VS Code + Jupyter],
-    [Desarrollo],
-    [Notebooks para ejecución reproducible y documentada],
-
-    [Power BI],
-    [Visualización],
-    [Dashboard interactivo con filtros, KPIs y gráficos],
+    [`PostgreSQL`], [Almacenamiento], [Almacén de datos con tipos geográficos],
+    [VS Code + Jupyter], [Desarrollo], [Notebooks para ejecución reproducible],
+    [Power BI], [Visualización], [Dashboard interactivo con KPIs y gráficos],
   )
 ]
 
 == Diseño del modelado de datos
 
 Esquema estrella: una tabla de hechos central y cuatro tablas de dimensión, que
-desnormaliza las dimensiones categóricas y mantiene la granularidad en la tabla
-de hechos.
+desnormaliza dimensiones categóricas y mantiene granularidad analítica.
 
 #cols[
   *Dimensiones*
@@ -238,16 +173,16 @@ de hechos.
   - DimCaseType (10): categoría de incidencia
   - DimOrigin (8): canal de reporte
 ][
-  *Hechos y relaciones*
+  *Hechos*
   - FactIncident (218 591 registros)
   - Coordenadas, N° de caso, tiempo de respuesta
-  - Cada fila se vincula a las 4 dimensiones vía FK
+  - Cada fila vinculada a las 4 dimensiones vía FK
 ]
 
-== Esquema estrella
+#colbreak()
 
 #align(center)[
-  #image("/src/assets/img/start-schema.png", height: 100%)
+  #image("/src/assets/img/start-schema.png", height: 1fr)
 ]
 
 == Indicadores clave de rendimiento (KPI)
@@ -259,10 +194,7 @@ de hechos.
     inset: 6pt,
     stroke: 0.5pt,
     table.header([*KPI*], [*Descripción*], [*Fuente*]),
-    [Total de incidencias],
-    [Casos acumulados en el período analizado],
-    [FactIncident],
-
+    [Total de incidencias], [Casos acumulados en el período], [FactIncident],
     [Incidencias por zona],
     [Distribución geográfica de casos],
     [FactIncident × DimLocation],
@@ -276,7 +208,7 @@ de hechos.
     [FactIncident × DimCaseType],
 
     [Canal predominante],
-    [Fuente de origen con mayor volumen],
+    [Fuente con mayor volumen],
     [FactIncident × DimOrigin],
 
     [Tiempo prom. de atención],
@@ -296,55 +228,100 @@ de hechos.
 
 = Construcción del Dashboard
 
-== Construcción de la solución ETL
+== Proceso ETL
 
-Pipeline ejecutado en tres etapas secuenciales, cada una en un cuaderno Jupyter
-independiente, documentando fase, justificación y resultados intermedios.
+*Extracción:* 219 373 registros, 18 columnas, 39.39 MB, escritura atómica.
 
-*Extracción*: 219 373 registros, 18 columnas, 39.39 MB, escritura atómica
-(`.tmp` + renombrado).
+*Transformación:*
+- Eliminación de nulos (145), atípicos (4), filtrado geográfico (629),
+  duplicados (4)
+- Normalización de texto, parsing de ZONA, conversión de fechas/horas,
+  renombrado a snake_case
+- *Resultado:* 218 591 registros limpios
 
-#align(center)[
-  #image("/src/assets/img/vista-web-extraccion.png", height: 100%)
-]
+*Carga:*
+- Migración del esquema, carga de dimensiones (DimTime 95 526, DimLocation 168,
+  DimCaseType 10, DimOrigin 8) y hechos (218 591) en lotes de 10 000
 
-== Transformación
+== Vista general del dashboard
 
-+ Eliminación de nulos: 145 filas (0.07%) sin ZONA
-+ Eliminación de atípicos: 4 filas con cadenas corruptas
-+ Filtrado geográfico: buffer de 100 m sobre GeoJSON; 629 registros (0.29%)
-  eliminados
-+ Duplicados: 4 casos (mismo N° CASO) eliminados
-+ Normalización de texto (title case), columnas redundantes eliminadas
-+ Parsing de ZONA, conversión de fechas/horas, renombrado a snake_case
+Conexión directa a PostgreSQL con esquema estrella. El dashboard integra seis
+componentes visuales que permiten un análisis completo del sistema de
+videovigilancia.
 
-*Resultado*: 218 591 registros limpios en `registro_de_incidencias_clean.csv`.
-
-== Carga
-
-+ Migración del esquema (`migrate_db()`)
-+ Carga de dimensiones: DimTime (95 526), DimLocation (168), DimCaseType (10),
-  DimOrigin (8)
-+ Carga de hechos: 218 591 registros en lotes de 10 000 con `bulk_create()`
+#colbreak()
 
 #align(center)[
-  #image("/src/assets/img/vista-tabla-fact_incident.png", height: 100%)
+  #image("/src/assets/img/vista-powerbi-dashboard.png", height: 1fr)
 ]
 
-== Construcción del dashboard en Power BI
 
-Conexión directa a PostgreSQL con los datos cargados en el esquema estrella:
+= Dashboard en Detalle
 
-- Tarjetas de KPIs: total de incidencias y tiempo promedio de respuesta
-- Mapa de calor geográfico de distribución espacial
-- Gráfico de líneas: tendencia mensual (sept.–nov. 2025)
-- Gráfico de anillo: distribución por turnos
-- Treemap: carga por base descentralizada (39 bases)
-- Filtros: slicer de meses y segmentadores por zona
+== KPIs y sistema de filtros
 
-#align(center)[
-  #image("/src/assets/img/vista-powerbi-dashboard.png", height: 100%)
+#cols[
+  *Tarjetas de KPIs*
+  - Total de incidencias: 218 591
+  - Tiempo promedio de respuesta: 12.47 min
+  - Métricas calculadas directamente desde FactIncident sobre el modelo estrella
+
+  *Slicer de meses*
+  - Septiembre, octubre y noviembre 2025
+  - Filtrado dinámico de todo el dashboard
+][
+  *Segmentadores por zona*
+  - Zona 1, Zona 2, Zona 3
+  - Selección múltiple para comparar áreas operativas
+  - Actualización en tiempo real de KPIs, mapa y gráficos
 ]
+
+#colbreak()
+
+#align(center)[#image("/src/assets/img/dashboard.png", height: 1fr)]
+
+== Mapa de calor geográfico
+
+#focus-slide[
+  *Distribución espacial de incidencias* \
+  Gradiente de calor proporcional al volumen por coordenada \
+  Mayor concentración: C - Oquendo, C - Ramon Castilla, C - Quilca, \
+  C - Tomas Valle y C - Obelisco
+]
+
+- Validación geográfica con buffer de 100 m sobre GeoJSON distrital
+- Correlación visual con zonas de alta criminalidad reportadas por INEI
+- Permite identificar clusters y áreas prioritarias para patrullaje
+
+#align(center)[#image(
+  "/src/assets/img/vista-powerbi-dashboard.png",
+  height: 50%,
+)]
+
+== Gráficos analíticos
+
+#cols[
+  *Gráfico de líneas — Tendencia mensual*
+  - Septiembre: 54 mil
+  - Octubre: 84 mil (+55.6%)
+  - Noviembre: 80 mil
+  - Identifica el repunte estacional
+
+  *Gráfico de anillo — Turnos*
+  - Noche: 27.4% | Madrugada: 26.8%
+  - Tarde: 24.7% | Mañana: 21.1%
+  - 54.2% en noche + madrugada
+][
+  *Treemap — Carga por base*
+  - 39 bases descentralizadas
+  - Top 5 concentra 68.8% del total
+  - Oquendo (49 829) y Ramon Castilla (32 881) lideran
+]
+
+#align(center)[#image(
+  "/src/assets/img/vista-powerbi-dashboard.png",
+  height: 40%,
+)]
 
 
 = Storytelling con Datos
@@ -353,30 +330,30 @@ Conexión directa a PostgreSQL con los datos cargados en el esquema estrella:
 
 El storytelling con datos combina visualización, contexto periodístico y
 estructura dramática para transformar cifras abstractas en una historia
-comprensible y accionable @Duarte2019. Se presenta en cuatro actos, anclado en
-noticias y reportes oficiales sobre seguridad ciudadana en el Callao.
+comprensible y accionable @Duarte2019. Cuatro actos anclados en noticias y
+reportes oficiales sobre seguridad ciudadana en el Callao.
 
 #align(center)[
-  #image("/src/assets/img/dashboard.png", height: 100%)
+  #image("/src/assets/img/dashboard.png", height: 80%)
 ]
 
-== Acto I: El panorama
+== Acto I: El panorama — ¿Qué está pasando en el Callao?
 
 El Callao alcanzó una tasa de homicidios de 23.6 por cada 100 mil habitantes en
 2025, la segunda región más violenta del país @INEICriminalidad2025. Entre enero
-y octubre de 2025 se registraron 165 homicidios, un récord histórico
-@LaRepublicaHomicidiosOct2025; las extorsiones subieron 57%.
+y octubre de 2025 se registraron 165 homicidios, récord histórico; las
+extorsiones subieron 57% @LaRepublicaHomicidiosOct2025.
 
 #focus-slide[
   *218 591* incidencias (sept.–nov. 2025) · *12.47 min* tiempo promedio de
   respuesta · 3 zonas operativas · 8 canales (97.6% cámaras)
 ]
 
-El mapa de calor muestra la mayor concentración en Callao Cercado, La Perla, San
-Miguel y Bellavista — zonas que lideran homicidios y extorsión
-@LaRepublicaHomicidiosOct2025.
+El mapa de calor muestra la mayor concentración en las bases C - Oquendo,
+C - Ramon Castilla, C - Quilca, C - Tomas Valle y C - Obelisco — las cinco
+bases con mayor carga operativa del sistema.
 
-== Acto II: ¿Cuándo y cómo?
+== Acto II: ¿Cuándo y cómo ocurren?
 
 #cols[
   *Distribución por turno*
@@ -428,25 +405,19 @@ Las 5 bases principales concentran el *68.8%* del total de incidencias.
 
 = Conclusiones
 
-== Conclusiones
+== Conclusiones y recomendaciones
 
-- Se transformaron 219 373 registros iniciales en 218 591 registros válidos tras
-  limpieza, normalización y validación
-- El modelo estrella permitió consultas y análisis rápidos y ordenados mediante
-  hechos y dimensiones (tiempo, ubicación, tipo, canal)
-- El 64.6% de las incidencias corresponde a tránsito y seguridad vial: una
-  problemática tan relevante como la seguridad ciudadana
-- La inteligencia de negocios permitió convertir datos históricos en información
-  que apoya la distribución de recursos y la planificación de seguridad
+*Conclusiones:*
+- 219 373 registros iniciales transformados en 218 591 válidos tras limpieza
+- El modelo estrella permitió consultas y análisis rápidos y ordenados
+- El 64.6% de las incidencias corresponde a tránsito y seguridad vial
+- La inteligencia de negocios convierte datos históricos en información para la
+  distribución de recursos y planificación de seguridad
 
-== Recomendaciones
-
-- Reforzar personal de serenazgo y patrullaje en turnos noche/madrugada,
-  priorizando zonas y bases con mayor carga
-- Promover canales alternativos a las cámaras (WhatsApp, App Callao Seguro,
-  teléfono, botón de pánico) para mayor participación ciudadana
-- Automatizar el proceso ETL con validaciones de calidad programadas, en lugar
-  de cargas manuales, para mantener el dashboard siempre actualizado y confiable
+*Recomendaciones:*
+- Reforzar personal de serenazgo y patrullaje en turnos noche/madrugada
+- Promover canales alternativos a las cámaras (WhatsApp, App Callao Seguro)
+- Automatizar el proceso ETL con validaciones de calidad programadas
 
 == Lecciones aprendidas
 
@@ -454,9 +425,11 @@ Las 5 bases principales concentran el *68.8%* del total de incidencias.
   relaciones producen KPIs mal calculados
 - "Tener muchos datos" no es lo mismo que "tener datos útiles": de 219 373
   registros se descartaron 782 tras la depuración
+- La calidad de la solución final depende directamente del rigor en la limpieza
+  del origen: un dashboard montado sobre datos sucios solo perpetúa el problema
+  que busca resolver
 - Trabajar con datos reales de seguridad ciudadana implica responsabilidad, pues
-  la información puede influir en decisiones de despliegue y priorización de
-  zonas
+  la información puede influir en decisiones de despliegue y priorización
 
 == ¡Gracias!
 

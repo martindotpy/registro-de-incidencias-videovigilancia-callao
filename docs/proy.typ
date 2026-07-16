@@ -225,16 +225,19 @@ calidad, eficiencia o resultados de una organización @SalesforceLATAM2024.
 
 La Municipalidad Provincial del Callao genera un volumen elevado de datos
 derivados del sistema de videovigilancia, con más de 219 000 incidencias
-registradas en la plataforma de datos abiertos @MunicipalidadCallao2024. Sin
-embargo, la ausencia de herramientas de análisis y visualización adecuadas
-limita la capacidad de identificar patrones, tendencias espaciotemporales y
-áreas prioritarias que requieren intervención inmediata.
+registradas en la plataforma de datos abiertos @MunicipalidadCallao2024.
+Procesar manualmente este volumen de registros históricos resulta inviable
+para la gestión pública, pues demandaría recursos humanos y tiempo
+desproporcionados que comprometen la capacidad de respuesta institucional.
 
-Esta situación dificulta la distribución eficiente de recursos, la planificación
-estratégica de patrol y la evaluación del desempeño operativo del sistema de
-seguridad. La falta de información procesada y accesible impacta negativamente
-en la calidad de las decisiones y en la capacidad de respuesta ante incidentes
-de seguridad ciudadana.
+La ausencia de herramientas de análisis y visualización adecuadas limita la
+capacidad de identificar patrones, tendencias espaciotemporales y áreas
+prioritarias que requieren intervención inmediata. Esta situación dificulta la
+distribución eficiente de recursos, la planificación estratégica de patrol y la
+evaluación del desempeño operativo del sistema de seguridad. La falta de
+información procesada y accesible impacta negativamente en la calidad de las
+decisiones y en la capacidad de respuesta ante incidentes de seguridad
+ciudadana.
 
 == Objetivo general del proyecto
 
@@ -635,10 +638,9 @@ noviembre de 2025):
 
 El mapa de calor geográfico, ubicado en la sección izquierda del dashboard,
 revela la distribución espacial de las incidencias. La mayor concentración se
-observa en el Callao Cercado, extendiéndose hacia el sur en dirección a La Perla
-y San Miguel, así como hacia el norte en Bellavista. Estas zonas coinciden con
-los distritos que lideran las estadísticas de homicidios y extorsión
-@LaRepublicaHomicidiosOct2025. Esta correlación entre los datos del sistema de
+observa en las bases C - Oquendo, C - Ramon Castilla, C - Quilca, C - Tomas
+Valle y C - Obelisco, que son las cinco con mayor carga operativa del
+sistema. Esta correlación entre los datos del sistema de
 videovigilancia y las cifras oficiales de criminalidad valida la utilidad del
 dashboard como herramienta de diagnóstico territorial.
 
@@ -819,7 +821,10 @@ fiscalización electrónica).
   originales, terminamos con 218 591 válidos después de normalizar y validar.
   Ese proceso de descartar 782 registros nos hizo entender que "tener muchos
   datos" no es lo mismo que "tener datos útiles", y que gran parte del trabajo
-  real de BI está en depurar antes de visualizar.
+  real de BI está en depurar antes de visualizar. Esta experiencia reafirma que
+  la calidad de la solución final depende directamente del rigor en la limpieza
+  del origen: un dashboard montado sobre datos sucios solo perpetúa el
+  problema que busca resolver.
 - Trabajar con datos reales de seguridad ciudadana nos hizo más conscientes de
   la responsabilidad que implica manejar este tipo de información, no es solo
   mostrar gráficos, sino generar información que puede influir en decisiones de
